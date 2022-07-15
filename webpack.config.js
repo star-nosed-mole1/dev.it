@@ -1,60 +1,53 @@
-const webpack = require('webpack');
-const path = require('path');
-
+const webpack = require("webpack");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const config = {
   mode: process.env.NODE_ENV,
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
+  entry: ["./src/index.js"],
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
   },
   devServer: {
-    'static': {
-      directory: './dist'
+    static: {
+      directory: "./dist",
     },
     compress: true,
     port: 8080,
-    hot: true,
   },
   module: {
     rules: [
       {
-       test: /\.jsx?/,
+        test: /\.jsx?/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react'],
+            presets: ["@babel/preset-env", "@babel/preset-react"],
           },
         },
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ]
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.svg$/,
-        use: 'file-loader'
+        use: "file-loader",
       },
       {
         test: /\.png$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: "url-loader",
             options: {
-              mimetype: 'image/png'
-            }
-          }
-        ]
-      }
-    ]
-  }
+              mimetype: "image/png",
+            },
+          },
+        ],
+      },
+    ],
+  },
 };
 
 module.exports = config;
