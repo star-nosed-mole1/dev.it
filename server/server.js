@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+const router = require('./routes/api')
 
 app.use(express.json());
 
@@ -10,6 +11,8 @@ if (process.env.NODE_ENV === 'production') {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'));
   });
 }
+app.use('/api',router);
+
 
 
 app.listen(3000, () => {
