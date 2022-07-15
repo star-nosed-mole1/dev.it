@@ -1,4 +1,4 @@
-# empty-project
+# DEV.it
 
 Empty project.
 
