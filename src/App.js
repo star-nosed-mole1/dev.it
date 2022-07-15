@@ -1,18 +1,13 @@
-
 import React from "react";
-import { hot } from 'react-hot-loader/root';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MainDisplay } from "./components/MainDisplay";
 
-class App extends React.Component {
-  render() {
-    const { name } = this.props;
-    return (
-      <>
-        <h1>
-          Hello {name}
-        </h1>
-      </>
-    );
-  }
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainDisplay />}></Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default hot(App);
