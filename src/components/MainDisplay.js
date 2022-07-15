@@ -8,6 +8,7 @@ export function MainDisplay() {
         height: "100%",
       }}
     >
+      {/* add navigation bar */}
       <div>Test</div>
     </Box>
   );
