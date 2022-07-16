@@ -12,10 +12,12 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 export function UserProfile() {
-  const [loginAccount, setLoginAccount] = useState(false);
+  const [loginAccount, setLoginAccount] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
+  const [statusRegistration, setStatusRegistration] = useState("");
+  const [statusColor, setStatusColor] = useState("");
 
   // indicate if the user is logged in
   const [loggedIn, setLoggedIn] = useState(false);
@@ -35,7 +37,25 @@ export function UserProfile() {
   }
 
   async function signUp() {
-    const register = await fetch("http://localhost:3000/user/register");
+    const register = await fetch("http://localhost:3000/user/register", {
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+        avatar: "",
+      }),
+    }).then((response) => response.json());
+
+    if (!register) {
+      setStatusRegistration("Username is already taken!");
+      setStatusColor("red");
+    } else {
+      setStatusRegistration("Successfully Registered!");
+      setStatusColor("green");
+    }
+    setTimeout(() => {
+      setStatusRegistration("");
+    }, 2000);
   }
 
   if (loggedIn) {
@@ -239,6 +259,7 @@ export function UserProfile() {
         <TextField
           variant="outlined"
           placeholder="Password"
+          type="password"
           sx={{
             backgroundColor: "primary.light",
           }}
@@ -246,6 +267,20 @@ export function UserProfile() {
             setPassword(e.target.value);
           }}
         ></TextField>
+        {
+          <div>
+            <Typography
+              sx={{
+                fontFamily: "Quicksand",
+                fontSize: "0.7em",
+                fontWeight: 600,
+                color: statusColor,
+              }}
+            >
+              {statusRegistration}
+            </Typography>
+          </div>
+        }
         <Button variant="contained" onClick={signUp}>
           <Typography
             sx={{

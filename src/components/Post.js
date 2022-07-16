@@ -6,11 +6,12 @@ export default function Post(prop) {
   // console.log("these are the post texts: ", prop.content);
   return (
     <Paper
-      elevation={24}
+      elevation={4}
       sx={{
         height: 60,
         display: "flex",
         borderRadius: 4,
+        fontFamily: 'sans-serif',
         "&:hover": {
           backgroundColor: "secondary.light",
           cursor: 'pointer'
@@ -23,9 +24,11 @@ export default function Post(prop) {
         alignSelf: 'center',
       }}/>
 
-      <span>{prop.username}</span>
+      <span style={{
+        paddingLeft: '10px',
+      }}>{prop.username}</span>
       <div style={{ 
-        paddingLeft: '30px', 
+        paddingLeft: '50px', 
         width: '100%',
         display: 'flex',
         alignItems: 'center',

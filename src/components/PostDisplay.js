@@ -20,12 +20,14 @@ export default function PostDisplay() {
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
       // console.log("Content: ", postState.postsArray[i].content);
-      console.log(postState.postsArray[i]);
+      console.log(postState.postsArray[i].created_at);
       array.push(<Post 
         key={i} 
         content={postState.postsArray[i].content} 
         avatar={postState.postsArray[i].author_id.avatar} 
-        username={postState.postsArray[i].author_id.username}/>
+        username={postState.postsArray[i].author_id.username}
+        createdAt={(postState.postsArray[i].created_at).split('').slice(0, 10).join('')}
+        />
       );
       setPostList(array);
     }
