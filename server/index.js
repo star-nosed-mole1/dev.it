@@ -6,6 +6,7 @@ const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRouter');
 const commentRouter = require('./routes/commentRouter');
 const authRouter = require('./routes/authRouter');
+const subRouter = require('./routes/subdevitRouter');
 const cors = require('cors');
 
 app.use(
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use('/user', userRouter);
 app.use('/post', postRouter);
 app.use('/comment', commentRouter);
+app.use('/sub', subRouter);
 // app.use('/auth', authRouter);
 
 //create auth/login route
