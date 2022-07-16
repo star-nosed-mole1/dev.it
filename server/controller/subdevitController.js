@@ -1,4 +1,5 @@
 const Sub = require('../models/Subdevit');
+const User = require('../models/User');
 
 const subController = {};
 
@@ -13,7 +14,9 @@ subController.create = async (req, res, next) => {
     subscribers: [created_by],
   });
 
-  res.send(sub);
+  User.findByIdAndUpdate(created_by, { $push: { subscribed_to: sub } })
+    .then((subbed) => res.send(subbed))
+    .catch((err) => next(err));
 };
 
 subController.subscribe = async (req, res, next) => {
