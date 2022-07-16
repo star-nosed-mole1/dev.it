@@ -7,15 +7,16 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "NODE_ENV=production nodemon server/server.js",
+    "start": "NODE_ENV=production nodemon server/index.js",
     "build": "webpack",
-    "dev": "NODE_ENV=development nodemon server/server.js & NODE_ENV=development webpack serve"
+    "dev": "NODE_ENV=development nodemon server/index.js & NODE_ENV=development webpack serve"
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@mui/material": "^5.9.0",
     "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
     "mongoose": "^6.4.4",
     "path": "^0.12.7",
     "react": "^18.2.0",

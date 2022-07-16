@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
 
 const initialState = {
   // posts are objects with information
@@ -21,9 +22,17 @@ const postsSlice = createSlice({
   },
 });
 
-const getPosts = createAsyncThunk("posts/getPosts", async (url) => {
+export const getPosts = createAsyncThunk("posts/getPosts", async (url) => {
   // perform fetch with localhost 3000
-  // return data from fetch
+  // const data = await fetch("http://localhost:3000/posts/recent").then(
+  //   (response) => response.json()
+  // );
+  try {
+    const data = await axios('http://localhost:3000/posts/recent')
+    return data;
+  } catch (err){
+    console.log('Something fucked up with the getPosts: ', err)
+  }
 });
 
 export default postsSlice.reducer;
