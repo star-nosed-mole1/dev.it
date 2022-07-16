@@ -5,20 +5,14 @@ const app = express();
 const User = require('./models/User');
 const Post = require('./models/Post');
 const Comment = require('./models/Comment');
-const Subveddit = require('./models/Subveddit');
 const userRouter = require('./routes/userRouter');
 const postRouter = require('./routes/postRouter');
 const commentRouter = require('./routes/commentRouter');
 
 app.use(express.json());
 
-app.use('/user',userRouter);
-app.use('/post',postRouter),
-app.use('/comment',commentRouter);
-
-
-
-
+app.use('/user', userRouter);
+app.use('/post', postRouter), app.use('/comment', commentRouter);
 
 // Create subdevit
 app.post('/sub/new', async (req, res, next) => {
