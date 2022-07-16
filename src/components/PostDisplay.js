@@ -21,7 +21,12 @@ export default function PostDisplay() {
     for (let i = 0; i < postState.postsArray.length; i++) {
       // console.log("Content: ", postState.postsArray[i].content);
       console.log(postState.postsArray[i]);
-      array.push(<Post key={i} content={postState.postsArray[i].content} />);
+      array.push(<Post 
+        key={i} 
+        content={postState.postsArray[i].content} 
+        avatar={postState.postsArray[i].author_id.avatar} 
+        username={postState.postsArray[i].author_id.username}/>
+      );
       setPostList(array);
     }
     // array.map((post, i) => {

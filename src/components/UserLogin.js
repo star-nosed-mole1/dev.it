@@ -12,13 +12,13 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 export function UserProfile() {
-  const [loginAccount, setLoginAccount] = useState(true);
+  const [loginAccount, setLoginAccount] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
 
   // indicate if the user is logged in
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   async function login() {
     // auth/login
@@ -32,6 +32,10 @@ export function UserProfile() {
       setAvatar(data.avatar);
       setLoggedIn(true);
     }
+  }
+
+  async function signUp() {
+    const register = await fetch("http://localhost:3000/user/register");
   }
 
   if (loggedIn) {
@@ -228,6 +232,9 @@ export function UserProfile() {
           sx={{
             backgroundColor: "primary.light",
           }}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
         ></TextField>
         <TextField
           variant="outlined"
@@ -235,8 +242,11 @@ export function UserProfile() {
           sx={{
             backgroundColor: "primary.light",
           }}
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
         ></TextField>
-        <Button variant="contained">
+        <Button variant="contained" onClick={signUp}>
           <Typography
             sx={{
               fontFamily: "Quicksand",

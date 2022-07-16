@@ -7,7 +7,6 @@ export default function Post(prop) {
   return (
     <Paper
       elevation={24}
-      variant="outlined"
       sx={{
         height: 60,
         display: "flex",
@@ -18,12 +17,29 @@ export default function Post(prop) {
         },
       }}
     >
-      <Avatar>T</Avatar>
+      <Avatar src={prop.avatar}
+      sx={{
+        padding: '5px',
+        alignSelf: 'center',
+      }}/>
 
-      <IconButton>
-      </IconButton>
-      <span>Username</span>
-      {prop.content}
+      <span>{prop.username}</span>
+      <div style={{ 
+        paddingLeft: '30px', 
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-around'
+      }}> 
+        {prop.content}
+        <IconButton style={{
+          marginLeft: 'auto',
+          marginRight: '7px',
+        }}>
+          <CommentIcon />
+        </IconButton>
+      </div>
+
     </Paper>
   );
 }
