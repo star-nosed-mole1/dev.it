@@ -5,7 +5,7 @@ const commentController = require('../controller/commentController');
 
 const router = express.Router();
 
-router.post('/', postController.createPost);
+router.post('/new', postController.createPost);
 
 router.get('/all', postController.getPosts);
 
