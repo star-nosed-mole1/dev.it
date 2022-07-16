@@ -1,31 +1,29 @@
-const User = require('../models/User');
+const User = require("../models/User");
 
-const authController = {}
+const authController = {};
 
 authController.login = (req, res, next) => {
-    const { username, password } = req.query;
-    const foundUser = User.findOne({username: username, password: password}).then(data =>{
-      console.log(data, 'data');
-      if (data.password !== password ){
-        res.locals.foundUser = false;
+  const { username, password } = req.query;
+  console.log(username, password);
+  const foundUser = User.findOne({ username: username, password: password })
+    .then((data) => {
+      console.log(data, "data");
+      if (data.password !== password) {
+        res.send(false);
         return next({
           status: 400,
-          message: 'Wrong username and or password'
+          message: "Wrong username and or password",
         });
+      } else {
+        res.status(200).send(true);
       }
-      else{
-        res.locals.foundUser = true;
-        res.sendStatus(200);
-        return next();
-      }
-    }).catch ( err =>{
+    })
+    .catch((err) => {
       return next({
         status: 400,
-        message: 'login failed caught err'
-      })
-    })
-
-    
-  };
+        message: "login failed caught err",
+      });
+    });
+};
 
 module.exports = authController;

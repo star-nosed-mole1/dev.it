@@ -9,11 +9,9 @@ export default function PostDisplay() {
   const postState = useSelector((state) => state.posts);
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
-  const [rendered, setRendered] = useState(false);
+  const [postList, setPostList] = useState([]);
 
   const array = [];
-
-  console.log(array);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -21,9 +19,14 @@ export default function PostDisplay() {
 
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
-      console.log("Content: ", postState.postsArray[i].content);
-      array.push(<Post content={postState.postsArray[i].content} />);
+      // console.log("Content: ", postState.postsArray[i].content);
+      console.log(postState);
+      array.push(<Post key={i} content={postState.postsArray[i].content} />);
+      setPostList(array);
     }
+    // array.map((post, i) => {
+    //   <Post id={i} content={post.content} />;
+    // });
   }, [postState.postsArray]);
   // creating an array
   // push new post component
@@ -34,13 +37,15 @@ export default function PostDisplay() {
         sx={{
           width: "70vw",
           height: 700,
-          backgroundColor: "secondary.light",
+          backgroundColor: "primary.light",
           display: "flex",
           flexDirection: "column",
+          padding: "20px",
+          gap: "20px",
+          borderRadius: 4,
         }}
       >
-        <Paper>I'm inside the box</Paper>
-        {array}
+        {postList}
       </Box>
     </div>
   );

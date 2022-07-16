@@ -10,14 +10,14 @@ postController.createPost = async (req, res, next) => {
   }
 };
 postController.getPosts = async (req, res, next) => {
+  console.log("test");
   if (req.params.user_id) {
     const { id } = req.params;
     const posts = await Post.find({ author_id: id });
     res.send(posts);
   } else {
     const posts = await Post.find({});
-    console.log(posts);
-    res.send(posts);
+    res.status(200).send(posts);
   }
 };
 postController.getPostsByPostID = async (req, res, next) => {

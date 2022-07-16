@@ -19,9 +19,18 @@ export function UserProfile() {
   // indicate if the user is logged in
   const [loggedIn, setLoggedIn] = useState(false);
 
-  function login() {
+  async function login() {
+    // auth/login
+    // Weldon_Orn
+    // a_bTPLU5Rvo4Sla
     // perform fetch to the server for authentication
-    console.log(username, password);
+    const data = await fetch(
+      `http://localhost:3000/auth/login?username=${username}&password=${password}`
+    ).then((response) => response.json());
+    console.log("data", data);
+    if (data) {
+      setLoggedIn(true);
+    }
   }
 
   if (loggedIn) {
