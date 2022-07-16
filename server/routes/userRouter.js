@@ -11,4 +11,6 @@ router.post('/register', userController.registerUser);
 //localhost:3000/user/post/authorID
 router.get('/post/:id', postController.getPosts);
 
+router.get('/all', userController.getUsers);
+
 module.exports = router;

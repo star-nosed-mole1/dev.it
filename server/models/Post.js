@@ -7,11 +7,6 @@ const postSchema = new mongoose.Schema(
       ref: 'User',
       required: true,
     },
-    // subveddit: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: 'Subveddit',
-    //   required: true,
-    // },
     created_at: {
       type: Date,
       default: Date.now,
