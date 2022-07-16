@@ -1,35 +1,50 @@
-// const express = require('express');
-// const passport = require('passport');
-// const githubStrategy = require('passport-github2');
-// const User = require('../models/User');
-// const key = require('./key');
+const express = require("express");
+const passport = require("passport");
+const githubStrategy = require("passport-github2");
+const User = require("../models/User");
+const key = require("./key");
+const dotenv = require("dotenv");
+dotenv.config();
 
-// const authController = require('../controller/authController');
+const authController = require("../controller/authController");
+
 
 // const router = express.Router();
 
-// passport.use(
-//   new githubStrategy(
-//     {
-//       clientID: key.github.clientID,
-//       clientSecret: key.github.clientSecret,
-//       callbackURL: 'http://localhost:3000/auth/github/callback',
-//     },
-//     (accessToken, refreshToken, profile, done) => {
-//       User.findOrCreate({ githubID: profile.id }, (err, user) => {
-//         return done(err, user);
-//       });
-//     },
-//   ),
-// );
+passport.serializeUser((user,done) =>{
+  done(null,user.id);
+});
 
-// router.get('/login', authController.login);
-// router.get('/github', passport.authenticate('github', { scope: ['profile'] }));
+passport.deserializeUser((id,done)=>{
+  User.findById(id).then((user)=>{
+    done(null,user);
+  })
+});
 
-// router.get('github/callback', passport.authenticate('github'), (req, res) => {
-//   res.send('you have authenticated');
-// });
+passport.use(new githubStrategy({
+  clientID: key.github.clientID,
+  clientSecret:  key.github.clientSecret,
+  callbackURL: "http://localhost:3000/auth/github/callback"
+}, async (accessToken,refreshToken, profile, done) => {
+  const foundUser = await User.find({githubID: profile.id});
+  if (foundUser){
+    done(null,foundUser);
+  }
+  else {
+    const newUser = await User.create({githubIDL : profile.id});
+    done(null,newUser);
+  }
 
-// router.get('/logout');
+}));
+
+router.get("/login", authController.login);
+router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
+
+router.get('/github/callback',passport.authenticate('github'),(req,res) => {
+  res.send(req.user);
+});
+
+router.get("/logout");
+
 
 // module.exports = router;
