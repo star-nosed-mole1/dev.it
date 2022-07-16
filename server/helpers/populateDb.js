@@ -2,7 +2,6 @@ const { faker } = require('@faker-js/faker');
 const axios = require('axios');
 
 // This helper function populates our db with fake users from fakerjs.
-// There is no error handling but it works :)
 const populateDb = () => {
   let res = [];
 
