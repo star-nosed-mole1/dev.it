@@ -34,14 +34,14 @@ passport.use(new githubStrategy({
     const newUser = await User.create({githubIDL : profile.id});
     done(null,newUser);
   }
-  
+
 }));
 
 router.get('/login', authController.login);
 router.get('/github',passport.authenticate('github',{scope: ['profile']}));
 
 router.get('/github/callback',passport.authenticate('github'),(req,res) => {
-  res.send('you have authenticated');
+  res.send(req.user);
 });
 
 router.get('/logout')
