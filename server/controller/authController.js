@@ -8,10 +8,10 @@ authController.login = (req, res, next) => {
       if (data.password !== password ){
         res.locals.foundUser = false;
         return next({
-        status: 400,
-        message: "Wrong username and or password",
-      });
-};
+          status: 400,
+          message: "Wrong username and or password",
+        });
+      }
       else{
         res.locals.foundUser = true;
         res.status(200).json(data);

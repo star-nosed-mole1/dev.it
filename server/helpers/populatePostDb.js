@@ -7,7 +7,7 @@ const populateDb = async () => {
   axios.get('http://localhost:3000/user/all').then((res) =>
     res.map((user) => {
       axios.post('http://localhost:3000/post/new', {
-        author_id: user._id,
+        author_id: user,
         title: faker.lorem.sentence(),
         content: faker.lorem.paragraph(Math.floor(Math.random() * 6)),
       });
