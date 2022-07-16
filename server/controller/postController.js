@@ -42,6 +42,9 @@ postController.getPostsByPostID = async (req, res, next) => {
   Post.findById(post_id)
     .populate('comments')
     .then((data) => res.send(data))
-    .catch((err) => next(err));
+    .catch((err) => {
+      return next(err);
+    });
 };
+
 module.exports = postController;

@@ -1,12 +1,8 @@
 const { faker } = require('@faker-js/faker');
 const axios = require('axios');
-const User = require('../models/User');
-const Post = require('../models/Post');
-const mongoose = require('mongoose');
-const async = require('async');
 
 // This helper function populates our db with fake posts.
-const populateDb = async () => {
+const populatePostDb = async () => {
   const data = await axios.get('http://localhost:3000/user/all');
   const users = await data.data;
   let arr = [];
@@ -25,5 +21,3 @@ const populateDb = async () => {
       .then((res) => console.log(res)),
   );
 };
-
-populateDb();
