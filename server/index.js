@@ -8,11 +8,17 @@ const Comment = require("./models/Comment");
 const userRouter = require("./routes/userRouter");
 const postRouter = require("./routes/postRouter");
 const commentRouter = require("./routes/commentRouter");
+const authRouter = require("./routes/authRouter");
 
 app.use(express.json());
 
 app.use("/user", userRouter);
-app.use("/post", postRouter), app.use("/comment", commentRouter);
+app.use("/post", postRouter);
+app.use("/comment", commentRouter);
+app.use('/auth',authRouter);
+
+//create auth/login route
+
 
 // Create subdevit
 app.post("/sub/new", async (req, res, next) => {
