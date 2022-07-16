@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axios from "axios";
 
 const initialState = {
   // posts are objects with information
@@ -28,10 +28,11 @@ export const getPosts = createAsyncThunk("posts/getPosts", async (url) => {
   //   (response) => response.json()
   // );
   try {
-    const data = await axios('http://localhost:3000/posts/recent')
-    return data;
-  } catch (err){
-    console.log('Something fucked up with the getPosts: ', err)
+    const data = await axios.get("/post/all");
+    console.log("Data from get request: ", data.data);
+    return data.data;
+  } catch (err) {
+    console.log("Something fucked up with the getPosts: ", err);
   }
 });
 
