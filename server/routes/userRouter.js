@@ -15,7 +15,7 @@ router.get('/post/:id', postController.getPosts);
 router.get('/all', userController.getUsers);
 
 // Gets a list of user ids ** FOR DEV PURPOSES **
-router.get('/user_ids', userController.getUserIds);
+router.get('/ids', userController.getUserIds);
 
 // get specific user
 router.get('/:id', userController.getOneUser);

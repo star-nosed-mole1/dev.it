@@ -1,17 +1,22 @@
 const Comment = require('../models/Comment');
+const Post = require('../models/Post');
 
 const commentController = {};
 
 commentController.newComment = async (req, res, next) => {
   const { author_id, post_id, content } = req.body;
   const comment = await Comment.create({ author_id, post_id, content });
-  const post = await Post.findById(post_id);
-
-  post.update({
-    $push: {
-      comments: comment,
+  Post.findByIdAndUpdate(
+    post_id,
+    {
+      $push: {
+        comments: comment,
+      },
     },
-  });
+    { safe: true, upsert: true },
+  )
+    .then((data) => res.send(data))
+    .catch((err) => next(err));
 
   res.send(comment);
 };
