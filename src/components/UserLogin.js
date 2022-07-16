@@ -10,14 +10,21 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import SendRoundedIcon from "@mui/icons-material/SendRounded";
+import { IconButton } from "@mui/material";
 
 export function UserProfile() {
   const [loginAccount, setLoginAccount] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState("");
   const [avatar, setAvatar] = useState("");
   const [statusRegistration, setStatusRegistration] = useState("");
   const [statusColor, setStatusColor] = useState("");
+
+  // state for posts
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   // indicate if the user is logged in
   const [loggedIn, setLoggedIn] = useState(false);
@@ -31,9 +38,23 @@ export function UserProfile() {
       `http://localhost:3000/auth/login?username=${username}&password=${password}`
     ).then((response) => response.json());
     if (data) {
+      console.log(data);
       setAvatar(data.avatar);
+      setUserId(data._id);
       setLoggedIn(true);
     }
+  }
+
+  async function submitPost() {
+    const result = await fetch("http://localhost:3000/post/new", {
+      method: "POST",
+      body: JSON.stringify({
+        id: userId,
+        title: title,
+        content: content,
+      }),
+    });
+    console.log(result);
   }
 
   async function signUp() {
@@ -117,16 +138,54 @@ export function UserProfile() {
             }}
             placeholder="Title"
             variant="standard"
-          ></TextField>
-          <TextField
-            sx={{
-              width: "100%",
-              height: "100%",
+            onChange={(e) => {
+              setTitle(e.target.value);
             }}
-            placeholder="Content"
-            rows="7"
-            multiline
           ></TextField>
+          <Box
+            sx={{
+              height: "100%",
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              alignItems: "flex-end",
+            }}
+          >
+            <TextField
+              sx={{
+                width: "100%",
+                height: "100%",
+                paddingLeft: "10px",
+                paddingBottom: "5px",
+                paddingRight: "10px",
+              }}
+              placeholder="Content"
+              rows="7"
+              multiline
+              onChange={(e) => setContent(e.target.value)}
+            ></TextField>
+            <IconButton
+              sx={{
+                margin: "0px",
+                padding: "0px",
+                paddingRight: "10px",
+                paddingBottom: "10px",
+                position: "absolute",
+              }}
+              disableRipple
+              color="primary"
+              onClick={submitPost}
+            >
+              <SendRoundedIcon
+                sx={{
+                  "&:hover": {
+                    color: "#ff9800",
+                  },
+                }}
+              ></SendRoundedIcon>
+            </IconButton>
+          </Box>
         </Box>
         <Box
           sx={{

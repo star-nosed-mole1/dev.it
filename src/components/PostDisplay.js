@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../redux/reducers/PostsSlice";
 import Post from "./Post";
 import { Paper } from "@mui/material";
+import moment from 'moment';
 
 export default function PostDisplay() {
   const postState = useSelector((state) => state.posts);
@@ -20,13 +21,16 @@ export default function PostDisplay() {
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
       // console.log("Content: ", postState.postsArray[i].content);
-      console.log(postState.postsArray[i].created_at);
+      // console.log((postState.postsArray[i].created_at).split('').slice(6, 8).join(''));
+      // const year = (postState.postsArray[i].created_at).split('').slice(0, 4).join('')
+      const post = postState.postsArray[i]
+      console.log(postState.postsArray[i])
       array.push(<Post 
         key={i} 
-        content={postState.postsArray[i].content} 
-        avatar={postState.postsArray[i].author_id.avatar} 
-        username={postState.postsArray[i].author_id.username}
-        createdAt={(postState.postsArray[i].created_at).split('').slice(0, 10).join('')}
+        content={post.title} 
+        avatar={post.author_id.avatar} 
+        username={post.author_id.username}
+        createdAt={(post.created_at).split('').slice(0, 10).join('')}
         />
       );
       setPostList(array);
@@ -44,7 +48,7 @@ export default function PostDisplay() {
         sx={{
           width: "70vw",
           height: 700,
-          backgroundColor: "primary.light",
+          backgroundColor: "secondary.light",
           display: "flex",
           flexDirection: "column",
           padding: "20px",
