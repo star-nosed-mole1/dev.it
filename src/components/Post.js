@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Post() {
   return (
-    // xP
+    <div></div>
   )
 }

@@ -15,6 +15,11 @@ const config = {
     },
     compress: true,
     port: 8080,
+    proxy: {
+      '/user': 'http://localhost:3000',
+      '/post': 'http://localhost:3000',
+      '/comment': 'http://localhost:3000',
+    }
   },
   module: {
     rules: [
