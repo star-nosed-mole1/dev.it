@@ -1,5 +1,6 @@
 import React from "react";
-import { Paper, Typography, Avatar } from "@mui/material";
+import CommentIcon from '@mui/icons-material/Comment';
+import { Paper, Typography, Avatar, IconButton } from "@mui/material";
 
 export default function Post(prop) {
   // console.log("these are the post texts: ", prop.content);
@@ -12,12 +13,15 @@ export default function Post(prop) {
         display: "flex",
         borderRadius: 4,
         "&:hover": {
-          backgroundColor: "secondary.main",
+          backgroundColor: "secondary.light",
           cursor: 'pointer'
         },
       }}
     >
       <Avatar>T</Avatar>
+
+      <IconButton>
+      </IconButton>
       <span>Username</span>
       {prop.content}
     </Paper>

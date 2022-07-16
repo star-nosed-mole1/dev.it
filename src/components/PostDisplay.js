@@ -20,7 +20,7 @@ export default function PostDisplay() {
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
       // console.log("Content: ", postState.postsArray[i].content);
-      console.log(postState);
+      console.log(postState.postsArray[i]);
       array.push(<Post key={i} content={postState.postsArray[i].content} />);
       setPostList(array);
     }

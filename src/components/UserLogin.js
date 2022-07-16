@@ -15,9 +15,10 @@ export function UserProfile() {
   const [loginAccount, setLoginAccount] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   // indicate if the user is logged in
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   async function login() {
     // auth/login
@@ -27,8 +28,8 @@ export function UserProfile() {
     const data = await fetch(
       `http://localhost:3000/auth/login?username=${username}&password=${password}`
     ).then((response) => response.json());
-    console.log("data", data);
     if (data) {
+      setAvatar(data.avatar);
       setLoggedIn(true);
     }
   }
@@ -39,12 +40,12 @@ export function UserProfile() {
         elevation={5}
         sx={{
           width: "20vw",
-          height: "30%",
+          height: "50%",
           borderRadius: "10px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "flex-start",
-          padding: "10px",
+          padding: "20px",
           backgroundColor: "secondary.light",
           gap: "10px",
         }}
@@ -53,7 +54,6 @@ export function UserProfile() {
           sx={{
             height: "max-content",
             width: "100%",
-            border: 1,
             borderRadius: "20px",
             display: "flex",
             flexDirection: "row",
@@ -62,7 +62,7 @@ export function UserProfile() {
           }}
         >
           {/* have to include image source here */}
-          <Avatar alt={"name-profile"}></Avatar>
+          <Avatar alt={username} src={avatar}></Avatar>
           <Typography
             sx={{
               padding: "0px",
@@ -71,17 +71,39 @@ export function UserProfile() {
               fontWeight: 600,
             }}
           >
-            Name
+            {username}
           </Typography>
         </Box>
         <Box
           sx={{
-            height: "60%",
+            height: "80%",
             width: "100%",
             border: 1,
             borderRadius: "20px",
+            display: "flex",
+            flexDirection: "column",
           }}
-        ></Box>
+        >
+          {/* area for user to make post */}
+          <TextField
+            sx={{
+              width: "93%",
+              height: "100%",
+              padding: "10px",
+            }}
+            placeholder="Title"
+            variant="standard"
+          ></TextField>
+          <TextField
+            sx={{
+              width: "100%",
+              height: "100%",
+            }}
+            placeholder="Content"
+            rows="7"
+            multiline
+          ></TextField>
+        </Box>
         <Box
           sx={{
             width: "100%",
@@ -103,6 +125,9 @@ export function UserProfile() {
               "&:hover": {
                 backgroundColor: "#e53935",
               },
+            }}
+            onClick={() => {
+              setLoggedIn(false);
             }}
           >
             SIGN OUT
