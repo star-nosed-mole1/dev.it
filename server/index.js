@@ -44,8 +44,9 @@ app.get("/sub/:id/subscribers", async (req, res, next) => {
 });
 
 // console.log(typeof process.env.MONGO_DB);
-
-mongoose.connect("process.env.MONGO_DB", () =>
+//"process.env.MONGO_DB"
+//console.log("process.env");
+mongoose.connect("mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority", () =>
   console.log("Connected to Mongo DB")
 );
 
