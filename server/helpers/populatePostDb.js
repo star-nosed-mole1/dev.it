@@ -3,6 +3,8 @@ const axios = require('axios');
 
 // This helper function populates our db with fake posts.
 const populatePostDb = async () => {
+const populateDb = async () => {
+
   const data = await axios.get('http://localhost:3000/user/all');
   const users = await data.data;
   let arr = [];

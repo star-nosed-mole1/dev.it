@@ -10,18 +10,34 @@ authController.login = (req, res, next) => {
         res.locals.foundUser = false;
         return next({
           status: 400,
-          message: 'Wrong username and or password',
+          message: "Wrong username and or password",
         });
-      } else {
+      }
+      else{
+
         res.locals.foundUser = true;
         res.status(200).json(data);
         return next();
       }
+
+      // if (data.password !== password) {
+      //   res.status(200).send(false);
+      //   return next({
+      //     status: 400,
+      //     message: "Wrong username and or password",
+      //   });
+      // } else {
+      //   res.status(200).send(true);
+      //   return next();
+      // }
+
     })
     .catch((err) => {
       return next({
         status: 400,
-        message: 'login failed caught err',
+
+        message: "login failed caught err",
+
       });
     });
 };
