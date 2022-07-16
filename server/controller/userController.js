@@ -12,9 +12,9 @@ userController.registerUser = async (req, res, next) => {
   }
 };
 
+// dev
 userController.getUsers = async (req, res, next) => {
   const users = await User.find({});
-  //for each obj in users, curr = user.id
   res.send(users);
 };
 
@@ -22,6 +22,13 @@ userController.getUsers = async (req, res, next) => {
 userController.getUserIds = async (req, res, next) => {
   const ids = await User.find({}).select("_id");
   res.send(ids);
+};
+
+// Look up specific user
+userController.getOneUser = async (req, res, next) => {
+  const { id } = req.body;
+  const user = await User.findById(id);
+  res.send(user);
 };
 
 module.exports = userController;

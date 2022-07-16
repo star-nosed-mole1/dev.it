@@ -13,6 +13,7 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 const key = require("./routes/key");
 
+
 app.use(
   cors({
     origin: "http://localhost:8080",
@@ -28,43 +29,15 @@ app.use(
   })
 );
 
+
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
 app.use("/auth", authRouter);
 
+
 //create auth/login route
 
-// // Create subdevit
-// app.post("/sub/new", async (req, res, next) => {
-//   const { id, name } = req.body;
-//   const sub = await Subveddit.create({ created_by: id, name });
-//   const user = await User.findById(id);
-//   sub.subscribers.push(user);
-//   res.send(sub);
-// });
-
-// // Get subveddit subscribers
-// app.get("/sub/:id/subscribers", async (req, res, next) => {
-//   // try {
-//   //   const { sub_id } = req.body;
-//   //   const sub = await Subveddit.findById(sub_id);
-//   //   res.send(sub);
-//   // } catch (err) {
-//   //   return next(err);
-//   // }
-//   const { id } = req.params;
-//   const sub = await Subveddit.findById(id);
-//   res.send(sub);
-// });
-
-// console.log(typeof process.env.MONGO_DB);
-
-// mongoose.connect(
-//   "MONGO_DB=mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority",
-//   () => console.log("Connected to Mongo DB")
-// //"process.env.MONGO_DB"
-// //console.log("process.env");
 mongoose.connect(
   "mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority",
   () => console.log("Connected to Mongo DB")
