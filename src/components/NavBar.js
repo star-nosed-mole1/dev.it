@@ -9,14 +9,19 @@ export function NavBar() {
     <AppBar
       sx={{
         width: "100%",
-        height: "100px",
+        height: "8%",
         backgroundColor: "primary.light",
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
       }}
     >
-      <IconButton>
+      <IconButton
+        sx={{
+          padding: "0px",
+          paddingLeft: "10px",
+        }}
+      >
         <img src={logo} width="100%" height="100%" />
       </IconButton>
 
