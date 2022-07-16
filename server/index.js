@@ -10,13 +10,20 @@ const postRouter = require('./routes/postRouter');
 const commentRouter = require('./routes/commentRouter');
 const authRouter = require('./routes/authRouter');
 const cors = require('cors');
+const cookieSession = require('cookie-session');
+const key = require('./routes/key');
 
 app.use(
   cors({
-    origin: 'http://localhost:8080',
+    origin: 'http://localhost:8080'
   }),
 );
+
 app.use(express.json());
+app.use(cookieSession({
+  maxAge:24*60*60*1000, //1 day
+  keys:[key.session.cookieKey]
+}));
 
 app.use('/user', userRouter);
 app.use('/post', postRouter);
