@@ -257,17 +257,20 @@ export function UserProfile() {
         >
           <GoogleIcon></GoogleIcon>
         </Button>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "black",
-            "&:hover": {
-              backgroundColor: "#212121",
-            },
-          }}
-        >
-          <GitHubIcon></GitHubIcon>
-        </Button>
+        <a href="http://localhost:3000/auth/github">
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "black",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#212121",
+              },
+            }}
+          >
+            <GitHubIcon></GitHubIcon>
+          </Button>
+        </a>
       </Paper>
     );
   }

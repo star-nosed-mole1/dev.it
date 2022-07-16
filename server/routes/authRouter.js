@@ -4,6 +4,9 @@ const githubStrategy = require("passport-github2");
 const User = require("../models/User");
 const key = require("./keys");
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 const authController = require("../controller/authController");
 
 const router = express.Router();
@@ -11,7 +14,7 @@ const router = express.Router();
 passport.use(
   new githubStrategy(
     {
-      clientID: key.github.clientID,
+      clientID: key.github.clientId,
       clientSecret: key.github.clientSecret,
       callbackURL: "http://localhost:3000/auth/github/callback",
     },
