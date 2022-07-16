@@ -67,7 +67,6 @@ export default function Post(prop) {
         {prop.content}</span>
         <Grow in={checked} mountOnEnter unmountOnExit> 
           <IconButton sx={{
-            fontSize: 'small',
             marginLeft: 'auto',
             marginRight: '7px',
             color: 'primary.dark',
