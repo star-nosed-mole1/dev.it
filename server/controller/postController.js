@@ -1,28 +1,48 @@
-const Post = require("../models/Post");
+const Post = require('../models/Post');
+const User = require('../models/User');
+
 const postController = {};
+
 postController.createPost = async (req, res, next) => {
   try {
     const { id, title, content } = req.body;
-    const post = await Post.create({ author_id: id, title, content });
+    const author_id = await User.findById(id);
+    const post = await Post.create({
+      author_id,
+      title,
+      content,
+    });
     res.send(post);
   } catch (err) {
     return next(err);
   }
 };
+
 postController.getPosts = async (req, res, next) => {
-  console.log("test");
-  if (req.params.user_id) {
+  if (req.params.id) {
     const { id } = req.params;
-    const posts = await Post.find({ author_id: id });
-    res.send(posts);
+    User.findById(id)
+      .populate('posts')
+      .exec((err, posts) => {
+        if (err) return next(err);
+        res.send(posts);
+      });
   } else {
-    const posts = await Post.find({});
-    res.status(200).send(posts);
+    Post.find({})
+      .populate('comments')
+      .populate({ path: 'author_id', select: ['username', 'avatar'] })
+      .exec((err, posts) => {
+        if (err) return next(err);
+        res.send(posts);
+      });
   }
 };
+
 postController.getPostsByPostID = async (req, res, next) => {
-  const { id } = req.params.post_id;
-  const posts = await Post.findById(id);
-  res.send(posts);
+  const { post_id } = req.params;
+  Post.findById(post_id)
+    .populate('comments')
+    .then((data) => res.send(data))
+    .catch((err) => next(err));
 };
 module.exports = postController;
