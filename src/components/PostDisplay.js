@@ -32,7 +32,7 @@ export default function PostDisplay() {
     <div>
       <Box
         sx={{
-          width: 700,
+          width: "70vw",
           height: 700,
           backgroundColor: "secondary.light",
           display: "flex",

@@ -39,9 +39,8 @@ app.get("/sub/:id/subscribers", async (req, res, next) => {
 
 // console.log(typeof process.env.MONGO_DB);
 
-mongoose.connect(
-  "mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority",
-  () => console.log("Connected to Mongo DB")
+mongoose.connect("process.env.MONGO_DB", () =>
+  console.log("Connected to Mongo DB")
 );
 
 app.listen(3000, () => console.log("Listening on port 3000"));

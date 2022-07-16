@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import { Grid } from "@mui/material";
 import PostDisplay from "./PostDisplay";
 import { NavBar } from "./NavBar";
-import { UserProfile } from "./UserProfile";
+import { UserProfile } from "./UserLogin";
 
 export function MainDisplay() {
   return (
@@ -25,9 +25,10 @@ export function MainDisplay() {
           height: "80%",
           display: "flex",
           flexDirection: "row",
-          justifyContent: "space-around",
-          gap: "20px",
-          padding: "20px",
+          justifyContent: "center",
+          gap: "50px",
+          padding: "0px",
+          margin: "0px",
         }}
       >
         <Box>
