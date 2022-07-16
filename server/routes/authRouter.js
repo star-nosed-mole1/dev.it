@@ -8,7 +8,8 @@ dotenv.config();
 
 const authController = require("../controller/authController");
 
-const router = express.Router();
+
+// const router = express.Router();
 
 passport.serializeUser((user,done) =>{
   done(null,user.id);
@@ -45,4 +46,5 @@ router.get('/github/callback',passport.authenticate('github'),(req,res) => {
 
 router.get("/logout");
 
-module.exports = router;
+
+// module.exports = router;

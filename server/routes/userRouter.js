@@ -17,4 +17,7 @@ router.get('/all', userController.getUsers);
 // Gets a list of user ids ** FOR DEV PURPOSES **
 router.get('/user_ids', userController.getUserIds);
 
+// get specific user
+router.get('/:id', userController.getOneUser);
+
 module.exports = router;
