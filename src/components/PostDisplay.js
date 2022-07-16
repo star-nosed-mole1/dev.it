@@ -54,6 +54,7 @@ export default function PostDisplay() {
           padding: "20px",
           gap: "20px",
           borderRadius: 4,
+          overflow: 'auto',
         }}
       >
         {postList}
