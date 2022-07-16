@@ -15,7 +15,7 @@ app.use(express.json());
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
-app.use('/auth',authRouter);
+app.use("/auth", authRouter);
 
 //create auth/login route
 
