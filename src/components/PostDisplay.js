@@ -14,17 +14,26 @@ export default function PostDisplay() {
   const [postList, setPostList] = useState([]);
   const [specificPost, setSpecificPost] = useState(true);
   const [specificPostDetail, setSpecificPostDetail] = useState({
-    _id: "62d2e7c5c7344575c9a394cf",
+    _id: "62d308eb2967a6bf2963cbfa",
     author_id: {
-      _id: "62d2290fbe13d65a80ea1f0b",
-      username: "Weldon_Orn",
+      _id: "62d2290fbe13d65a80ea1f1d",
+      username: "Alejandrin_Leffler",
       avatar:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/252.jpg",
+        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/354.jpg",
     },
-    title: "another post test test",
-    content: "CONTENT",
-    comments: [],
-    created_at: "2022-07-16T16:31:01.500Z",
+    title: "testing",
+    content: "testing",
+    comments: [
+      {
+        _id: "62d33997101eae47e3ba0f83",
+        author_id: "62d2290fbe13d65a80ea1f11",
+        post_id: "62d308eb2967a6bf2963cbfa",
+        content: "Ullam ipsa sed quis non qui.",
+        created_at: "2022-07-16T22:20:07.783Z",
+        __v: 0,
+      },
+    ],
+    created_at: "2022-07-16T18:52:27.834Z",
     __v: 0,
   });
 
@@ -35,6 +44,7 @@ export default function PostDisplay() {
   }, []);
 
   async function getSpecificPost(e) {
+    console.log(e);
     setSpecificPost(true);
     setSpecificPostDetail(e);
   }
@@ -100,7 +110,12 @@ export default function PostDisplay() {
             overflow: "auto",
           }}
         >
-          {<PostSpecific postDetail={specificPostDetail} />}
+          {
+            <PostSpecific
+              postDetail={specificPostDetail}
+              return={setSpecificPost}
+            />
+          }
         </Box>
       </div>
     );
