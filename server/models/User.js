@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    github: String,
     avatar: String,
     joined_on: {
       type: Date,

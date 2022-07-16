@@ -1,15 +1,14 @@
-const express = require("express");
-const postController = require("../controller/postController");
-const commentController = require("../controller/commentController");
+const express = require('express');
+const postController = require('../controller/postController');
 const router = express.Router();
-router.post("/new", postController.createPost);
-router.get("/all", postController.getPosts);
 
+// New post
 router.post('/new', postController.createPost);
 
+// Get all posts with comments, userinfo ** FOR HOMEPAGE**
 router.get('/all', postController.getPosts);
 
-//get comments of specific post
-router.get("/:post_id/comments", commentController.getComments);
-router.get("/:post_id", postController.getPostsByPostID);
+// Get specific post and its comments
+router.get('/:post_id', postController.getPostsByPostID);
+
 module.exports = router;
