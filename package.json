@@ -18,6 +18,7 @@
     "@mui/material": "^5.9.0",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
+    "express-router": "^0.0.1",
     "faker": "^6.6.6",
     "mongoose": "^6.4.4",
     "path": "^0.12.7",
