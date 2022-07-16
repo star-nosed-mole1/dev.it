@@ -5,7 +5,6 @@ const authController = {}
 authController.login = (req, res, next) => {
     const { username, password } = req.query;
     const foundUser = User.findOne({username: username, password: password}).then(data =>{
-      console.log(data, 'data');
       if (data.password !== password ){
         res.locals.foundUser = false;
         return next({
@@ -15,7 +14,7 @@ authController.login = (req, res, next) => {
       }
       else{
         res.locals.foundUser = true;
-        res.sendStatus(200);
+        res.status(200).json(data);
         return next();
       }
     }).catch ( err =>{
@@ -23,7 +22,7 @@ authController.login = (req, res, next) => {
         status: 400,
         message: 'login failed caught err'
       })
-    })
+    });
 
     
   };
