@@ -16,12 +16,92 @@ export function UserProfile() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // indicate if the user is logged in
+  const [loggedIn, setLoggedIn] = useState(false);
+
   function login() {
     // perform fetch to the server for authentication
     console.log(username, password);
   }
 
-  if (loginAccount) {
+  if (loggedIn) {
+    return (
+      <Paper
+        elevation={5}
+        sx={{
+          width: "20vw",
+          height: "30%",
+          borderRadius: "10px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+          padding: "10px",
+          backgroundColor: "secondary.light",
+          gap: "10px",
+        }}
+      >
+        <Box
+          sx={{
+            height: "max-content",
+            width: "100%",
+            border: 1,
+            borderRadius: "20px",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
+          {/* have to include image source here */}
+          <Avatar alt={"name-profile"}></Avatar>
+          <Typography
+            sx={{
+              padding: "0px",
+              margin: "0px",
+              fontFamily: "Quicksand",
+              fontWeight: 600,
+            }}
+          >
+            Name
+          </Typography>
+        </Box>
+        <Box
+          sx={{
+            height: "60%",
+            width: "100%",
+            border: 1,
+            borderRadius: "20px",
+          }}
+        ></Box>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Button
+            small
+            sx={{
+              fontFamily: "Quicksand",
+              fontWeight: 600,
+              width: "60%",
+              color: "#fefefe",
+              borderRadius: "30px",
+              backgroundColor: "#c62828",
+              "&:hover": {
+                backgroundColor: "#e53935",
+              },
+            }}
+          >
+            SIGN OUT
+          </Button>
+        </Box>
+      </Paper>
+    );
+  } else if (loginAccount) {
     return (
       <Paper
         elevation={5}
