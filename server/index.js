@@ -9,12 +9,18 @@ const userRouter = require("./routes/userRouter");
 const postRouter = require("./routes/postRouter");
 const commentRouter = require("./routes/commentRouter");
 const authRouter = require("./routes/authRouter");
+const cors = require("cors");
 
+app.use(
+  cors({
+    origin: "http://localhost:8080",
+  })
+);
 app.use(express.json());
 
-app.use('/user', userRouter);
-app.use('/post', postRouter);
-app.use('/comment', commentRouter);
+app.use("/user", userRouter);
+app.use("/post", postRouter);
+app.use("/comment", commentRouter);
 app.use("/user", userRouter);
 app.use("/post", postRouter);
 app.use("/comment", commentRouter);
@@ -47,13 +53,14 @@ app.use("/auth", authRouter);
 
 // console.log(typeof process.env.MONGO_DB);
 
+// mongoose.connect(
+//   "MONGO_DB=mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority",
+//   () => console.log("Connected to Mongo DB")
+// //"process.env.MONGO_DB"
+// //console.log("process.env");
 mongoose.connect(
-  "MONGO_DB=mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority",
+  "mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority",
   () => console.log("Connected to Mongo DB")
-//"process.env.MONGO_DB"
-//console.log("process.env");
-mongoose.connect("mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority", () =>
-  console.log("Connected to Mongo DB")
 );
 
 app.listen(3000, () => console.log("Listening on port 3000"));

@@ -28,9 +28,7 @@ export const getPosts = createAsyncThunk("posts/getPosts", async (url) => {
   //   (response) => response.json()
   // );
   try {
-    console.log("before the axios call");
     const data = await axios.get("http://localhost:3000/post/all");
-    console.log("Data from get request: ", data.data);
     return data.data;
   } catch (err) {
     console.log("Something fucked up with the getPosts: ", err);

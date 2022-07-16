@@ -48,7 +48,11 @@ export function NavBar() {
             HOME
           </Typography>
         </Button>
-        <IconButton>
+        <IconButton
+          sx={{
+            margin: "0px",
+          }}
+        >
           <a href="https://github.com/star-nosed-mole1/dev.it" target="_blank">
             <GitHubIcon></GitHubIcon>
           </a>
