@@ -7,9 +7,9 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "start": "NODE_ENV=production nodemon server/index.js",
+    "start": "cross-env NODE_ENV=production nodemon server/index.js",
     "build": "webpack",
-    "dev": "NODE_ENV=development nodemon server/index.js & NODE_ENV=development webpack serve"
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack serve\" \"nodemon server/index.js\""
   },
   "dependencies": {
     "@emotion/react": "^11.9.3",
@@ -30,7 +30,9 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0",
-    "redux": "^4.0.5"
+    "react-spring": "^9.5.0",
+    "redux": "^4.0.5",
+    "simplebar": "^5.3.8"
   },
   "devDependencies": {
     "@babel/core": "^7.18.6",
@@ -41,7 +43,9 @@
     "@reduxjs/toolkit": "^1.8.3",
     "babel-loader": "^8.2.5",
     "coexist-parser-proxy": "^1.0.8",
+    "concurrently": "^7.2.2",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "eslint": "^8.19.0",
     "express": "^4.18.1",
