@@ -27,6 +27,7 @@ userController.getUserIds = async (req, res, next) => {
 // Look up specific user
 userController.getOneUser = async (req, res, next) => {
   const { id } = req.params;
+
   User.findById(id)
     .populate('subscribed_to')
     .exec((err, user) => {
