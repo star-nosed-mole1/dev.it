@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, IconButton, Typography, Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
 import logo from "../assets/devit.png";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -33,21 +34,23 @@ export function NavBar() {
           alignItems: "center",
         }}
       >
-        <Button
-          small
-          sx={{
-            height: "30%",
-          }}
-        >
-          <Typography
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <Button
+            small
             sx={{
-              fontFamily: "Quicksand",
-              fontWeight: 600,
+              height: "30%",
             }}
           >
-            HOME
-          </Typography>
-        </Button>
+            <Typography
+              sx={{
+                fontFamily: "Quicksand",
+                fontWeight: 600,
+              }}
+            >
+              HOME
+            </Typography>
+          </Button>
+        </Link>
         <IconButton
           sx={{
             margin: "0px",

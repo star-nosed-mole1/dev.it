@@ -43,6 +43,7 @@ export default function PostDisplay() {
   }, []);
 
   async function getSpecificPost(e) {
+    console.log(e);
     setSpecificPost(true);
     setSpecificPostDetail(e);
   }
