@@ -45,6 +45,16 @@ export function UserProfile() {
     }
   }
 
+  function logoutUser() {
+    dispatch(
+      updateUser({
+        _id: "",
+        username: "",
+        avatar: "",
+      })
+    );
+  }
+
   async function submitPost() {
     const result = await fetch("http://localhost:3000/post/new", {
       method: "POST",
@@ -211,6 +221,7 @@ export function UserProfile() {
             }}
             onClick={() => {
               setLoggedIn(false);
+              logoutUser();
             }}
           >
             SIGN OUT
