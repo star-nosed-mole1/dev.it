@@ -27,8 +27,13 @@ userController.getUserIds = async (req, res, next) => {
 // Look up specific user
 userController.getOneUser = async (req, res, next) => {
   const { id } = req.params;
-  const user = await User.findById(id);
-  res.send(user);
+
+  User.findById(id)
+    .populate('subscribed_to')
+    .exec((err, user) => {
+      if (err) return next(err);
+      res.send(user);
+    });
 };
 
 module.exports = userController;

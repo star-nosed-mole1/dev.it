@@ -11,6 +11,11 @@ const postSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    subdevit: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subdevit',
+      // required: true,
+    },
     title: {
       type: String,
       required: true,
