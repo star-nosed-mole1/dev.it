@@ -12,6 +12,8 @@ import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { IconButton } from "@mui/material";
+import { updateUser } from "../redux/reducers/UserSlice";
+import { useDispatch } from "react-redux";
 
 export function UserProfile() {
   const [loginAccount, setLoginAccount] = useState(true);
@@ -28,17 +30,15 @@ export function UserProfile() {
 
   // indicate if the user is logged in
   const [loggedIn, setLoggedIn] = useState(false);
+  const dispatch = useDispatch();
 
   async function login() {
-    // auth/login
-    // Weldon_Orn
-    // a_bTPLU5Rvo4Sla
-    // perform fetch to the server for authentication
     const data = await fetch(
       `http://localhost:3000/auth/login?username=${username}&password=${password}`
     ).then((response) => response.json());
     if (data) {
-      console.log(data);
+      // send dispatch
+      dispatch(updateUser(data));
       setAvatar(data.avatar);
       setUserId(data._id);
       setLoggedIn(true);
@@ -49,12 +49,11 @@ export function UserProfile() {
     const result = await fetch("http://localhost:3000/post/new", {
       method: "POST",
       body: JSON.stringify({
-        id: userId,
+        author_id: userId,
         title: title,
         content: content,
       }),
     });
-    console.log(result);
   }
 
   async function signUp() {

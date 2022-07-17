@@ -5,8 +5,7 @@ const postController = {};
 
 postController.createPost = async (req, res, next) => {
   try {
-
-    const { author_id, title, content } = req.body;
+    const { author_id, title, content } = JSON.parse(req.body);
 
     const post = await Post.create({
       author_id,

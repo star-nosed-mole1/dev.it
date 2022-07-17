@@ -1,10 +1,10 @@
-const Comment = require('../models/Comment');
-const Post = require('../models/Post');
+const Comment = require("../models/Comment");
+const Post = require("../models/Post");
 
 const commentController = {};
 
 commentController.newComment = async (req, res, next) => {
-  const { author_id, post_id, content } = req.body;
+  const { author_id, post_id, content } = JSON.parse(req.body);
   const comment = await Comment.create({ author_id, post_id, content });
   Post.findByIdAndUpdate(
     post_id,
@@ -13,12 +13,10 @@ commentController.newComment = async (req, res, next) => {
         comments: comment,
       },
     },
-    { safe: true, upsert: true },
+    { safe: true, upsert: true }
   )
     .then((data) => res.send(data))
     .catch((err) => next(err));
-
-  res.send(comment);
 };
 
 commentController.getComments = async (req, res, next) => {
