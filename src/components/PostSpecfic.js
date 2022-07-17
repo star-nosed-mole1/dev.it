@@ -12,7 +12,8 @@ import {
 import moment from "moment";
 import { Comment } from "./Comment";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { CicularProgress } from "@mui/material";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
@@ -43,7 +44,6 @@ export function PostSpecific(prop) {
         <Comment commentInfo={comment} userInfo={user}></Comment>
       );
     }
-    console.log("test");
     if (postComments.length !== comments.length) {
       setComments(commentArray);
     }
@@ -119,7 +119,12 @@ export function PostSpecific(prop) {
           }}
         >
           {/* section for title */}
-          <Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
             <Typography
               sx={{
                 fontFamily: "Quicksand",
@@ -128,6 +133,21 @@ export function PostSpecific(prop) {
             >
               {postObject.title}
             </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                width: "100%",
+              }}
+            >
+              <Button>
+                <ThumbUpIcon></ThumbUpIcon>
+              </Button>
+              <Button>
+                <ThumbDownIcon></ThumbDownIcon>
+              </Button>
+            </Box>
           </Box>
 
           {/* section for content */}
