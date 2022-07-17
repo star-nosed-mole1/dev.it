@@ -20,7 +20,7 @@ export function Comment(prop) {
         elevation={3}
         sx={{
           width: "100%",
-          height: "max-content",
+          height: "70%",
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-end",
@@ -33,6 +33,8 @@ export function Comment(prop) {
             width: "max-content",
             height: "100%",
             display: "flex",
+            flexDirection: "column",
+            justifyContent: "flex-end",
           }}
         >
           <Typography
@@ -72,7 +74,7 @@ export function Comment(prop) {
         alt={user.username}
         src={user.avatar}
         sx={{
-          width: "10%",
+          width: "5%",
           height: "100%",
         }}
       ></Avatar>

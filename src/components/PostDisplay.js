@@ -12,30 +12,8 @@ export default function PostDisplay() {
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
-  const [specificPost, setSpecificPost] = useState(true);
-  const [specificPostDetail, setSpecificPostDetail] = useState({
-    _id: "62d308eb2967a6bf2963cbfa",
-    author_id: {
-      _id: "62d2290fbe13d65a80ea1f1d",
-      username: "Alejandrin_Leffler",
-      avatar:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/354.jpg",
-    },
-    title: "testing",
-    content: "testing",
-    comments: [
-      {
-        _id: "62d33997101eae47e3ba0f83",
-        author_id: "62d2290fbe13d65a80ea1f11",
-        post_id: "62d308eb2967a6bf2963cbfa",
-        content: "Ullam ipsa sed quis non qui.",
-        created_at: "2022-07-16T22:20:07.783Z",
-        __v: 0,
-      },
-    ],
-    created_at: "2022-07-16T18:52:27.834Z",
-    __v: 0,
-  });
+  const [specificPost, setSpecificPost] = useState(false);
+  const [specificPostDetail, setSpecificPostDetail] = useState({});
 
   const array = [];
 
@@ -44,7 +22,6 @@ export default function PostDisplay() {
   }, []);
 
   async function getSpecificPost(e) {
-    console.log(e);
     setSpecificPost(true);
     setSpecificPostDetail(e);
   }
@@ -86,7 +63,7 @@ export default function PostDisplay() {
             padding: "20px",
             gap: "20px",
             borderRadius: 4,
-            overflow: "auto",
+            overflowY: "auto",
           }}
         >
           {postList}
