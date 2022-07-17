@@ -14,6 +14,7 @@ import SendRoundedIcon from "@mui/icons-material/SendRounded";
 import { IconButton } from "@mui/material";
 import { updateUser } from "../redux/reducers/UserSlice";
 import { useDispatch } from "react-redux";
+import { Divider } from "@mui/material";
 
 export function UserProfile() {
   const [loginAccount, setLoginAccount] = useState(true);
@@ -118,11 +119,11 @@ export function UserProfile() {
             {username}
           </Typography>
         </Box>
+        <Divider />
         <Box
           sx={{
             height: "80%",
             width: "100%",
-            border: 1,
             borderRadius: "20px",
             display: "flex",
             flexDirection: "column",
@@ -131,12 +132,12 @@ export function UserProfile() {
           {/* area for user to make post */}
           <TextField
             sx={{
-              width: "93%",
+              width: "95%",
               height: "100%",
               padding: "10px",
             }}
-            placeholder="Title"
-            variant="standard"
+            label="Title"
+            variant="filled"
             onChange={(e) => {
               setTitle(e.target.value);
             }}
@@ -159,7 +160,8 @@ export function UserProfile() {
                 paddingBottom: "5px",
                 paddingRight: "10px",
               }}
-              placeholder="Content"
+              label="Content"
+              variant="filled"
               rows="7"
               multiline
               onChange={(e) => setContent(e.target.value)}
@@ -186,6 +188,7 @@ export function UserProfile() {
             </IconButton>
           </Box>
         </Box>
+        <Divider />
         <Box
           sx={{
             width: "100%",
@@ -229,31 +232,32 @@ export function UserProfile() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "10px",
-          backgroundColor: "secondary.light",
+          backgroundColor: "primary.light",
           gap: "10px",
         }}
       >
         <TextField
+          label="Username"
           variant="outlined"
-          placeholder="Username"
+          type="username"
           required
           onChange={(e) => {
             setUsername(e.target.value);
           }}
           sx={{
-            backgroundColor: "primary.light",
+            backgroundColor: "secondary.light",
           }}
         ></TextField>
         <TextField
           variant="outlined"
-          placeholder="Password"
+          label="Password"
           required
           onChange={(e) => {
             setPassword(e.target.value);
           }}
           type="password"
           sx={{
-            backgroundColor: "primary.light",
+            backgroundColor: "secondary.light",
           }}
         ></TextField>
         <Button variant="contained" onClick={login}>
