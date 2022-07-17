@@ -4,8 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../redux/reducers/PostsSlice";
 import Post from "./Post";
 import { PostSpecific } from "./PostSpecfic";
-import { Paper } from "@mui/material";
-import moment from "moment";
+import { motion } from "framer-motion";
 
 export default function PostDisplay() {
   const postState = useSelector((state) => state.posts);
@@ -22,7 +21,6 @@ export default function PostDisplay() {
   }, []);
 
   async function getSpecificPost(e) {
-    console.log(e);
     setSpecificPost(true);
     setSpecificPostDetail(e);
   }
@@ -31,16 +29,33 @@ export default function PostDisplay() {
     for (let i = 0; i < postState.postsArray.length; i++) {
       const post = postState.postsArray[i];
       array.push(
-        <Post
-          key={i}
-          content={post.title}
-          avatar={post.author_id.avatar}
-          username={post.author_id.username}
-          createdAt={post.created_at.split("").slice(0, 10).join("")}
-          onClick={() => {
-            getSpecificPost(post);
+        <motion.div
+          whileHover={{
+            scale: 0.97,
           }}
-        />
+          animate={{
+            marginTop: 0,
+            opacity: 1,
+          }}
+          initial={{
+            marginTop: 1000,
+            opacity: 0,
+          }}
+          transition={{
+            duration: 0.5,
+          }}
+        >
+          <Post
+            key={i}
+            content={post.title}
+            avatar={post.author_id.avatar}
+            username={post.author_id.username}
+            createdAt={post.created_at.split("").slice(0, 10).join("")}
+            onClick={() => {
+              getSpecificPost(post);
+            }}
+          />
+        </motion.div>
       );
       setPostList(array);
     }
