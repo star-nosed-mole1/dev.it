@@ -12,62 +12,8 @@ export default function PostDisplay() {
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
-  const [specificPost, setSpecificPost] = useState(true);
-  const [specificPostDetail, setSpecificPostDetail] = useState({
-    _id: "62d3090a2967a6bf2963cbfd",
-    author_id: {
-      _id: "62d2290fbe13d65a80ea1f1f",
-      username: "Keshawn35",
-      avatar:
-        "https://cloudflare-ipfs.com/ipfs/Qmd3W5DuhgHirLHGVixi6V76LhCkZUz6pnFt5AJBiyvHye/avatar/323.jpg",
-    },
-    title: "egrerg",
-    content: "34wfergr",
-    comments: [
-      {
-        _id: "62d33997101eae47e3ba0f86",
-        author_id: "62d2290fbe13d65a80ea1f15",
-        post_id: "62d3090a2967a6bf2963cbfd",
-        content: "Vel nobis quia tempora ut soluta.",
-        created_at: "2022-07-16T22:20:07.804Z",
-        __v: 0,
-      },
-      {
-        _id: "62d3804725a9375a15967544",
-        author_id: "62d2290fbe13d65a80ea1f0b",
-        post_id: "62d3090a2967a6bf2963cbfd",
-        content: "dfdfdfd",
-        created_at: "2022-07-17T03:21:43.285Z",
-        __v: 0,
-      },
-      {
-        _id: "62d3804a25a9375a15967547",
-        author_id: "62d2290fbe13d65a80ea1f0b",
-        post_id: "62d3090a2967a6bf2963cbfd",
-        content: "dfdfdfd",
-        created_at: "2022-07-17T03:21:46.697Z",
-        __v: 0,
-      },
-      {
-        _id: "62d3804b25a9375a1596754a",
-        author_id: "62d2290fbe13d65a80ea1f0b",
-        post_id: "62d3090a2967a6bf2963cbfd",
-        content: "dfdfdfd",
-        created_at: "2022-07-17T03:21:47.077Z",
-        __v: 0,
-      },
-      {
-        _id: "62d3804b25a9375a1596754d",
-        author_id: "62d2290fbe13d65a80ea1f0b",
-        post_id: "62d3090a2967a6bf2963cbfd",
-        content: "dfdfdfd",
-        created_at: "2022-07-17T03:21:47.235Z",
-        __v: 0,
-      },
-    ],
-    created_at: "2022-07-16T18:52:58.583Z",
-    __v: 0,
-  });
+  const [specificPost, setSpecificPost] = useState(false);
+  const [specificPostDetail, setSpecificPostDetail] = useState({});
 
   const array = [];
 
