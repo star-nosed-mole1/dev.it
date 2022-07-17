@@ -14,6 +14,7 @@ import { Comment } from "./Comment";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import { motion } from "framer-motion";
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
@@ -41,7 +42,20 @@ export function PostSpecific(prop) {
         `http://localhost:3000/user/${comment.author_id}`
       ).then((response) => response.json());
       commentArray.push(
-        <Comment commentInfo={comment} userInfo={user}></Comment>
+        <motion.div
+          animate={{
+            marginTop: 0,
+            opacity: 1,
+          }}
+          initial={{
+            marginTop: 500,
+          }}
+          transition={{
+            duration: 0.7,
+          }}
+        >
+          <Comment commentInfo={comment} userInfo={user}></Comment>
+        </motion.div>
       );
     }
     if (postComments.length !== comments.length) {

@@ -11,6 +11,7 @@ export default function PostDisplay() {
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
+
   const [specificPost, setSpecificPost] = useState(false);
   const [specificPostDetail, setSpecificPostDetail] = useState({});
 
@@ -28,11 +29,12 @@ export default function PostDisplay() {
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
       const post = postState.postsArray[i];
+      console.log(post.comments);
       array.push(
         <motion.div
-          whileHover={{
-            scale: 0.97,
-          }}
+          // whileHover={{
+          //   scale: 1.01,
+          // }}
           animate={{
             marginTop: 0,
             opacity: 1,
@@ -42,11 +44,12 @@ export default function PostDisplay() {
             opacity: 0,
           }}
           transition={{
-            duration: 0.5,
+            duration: 0.7,
           }}
         >
           <Post
             key={i}
+            comments={post.comments}
             content={post.title}
             avatar={post.author_id.avatar}
             username={post.author_id.username}
@@ -54,7 +57,7 @@ export default function PostDisplay() {
             onClick={() => {
               getSpecificPost(post);
             }}
-          />
+          ></Post>
         </motion.div>
       );
       setPostList(array);
