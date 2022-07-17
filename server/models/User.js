@@ -17,6 +17,12 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    subscribed_to: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Subdevit',
+      },
+    ],
     posts: [
       {
         type: mongoose.Schema.Types.ObjectId,
