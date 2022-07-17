@@ -2,14 +2,17 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const User = require('./models/User');
-const Post = require('./models/Post');
-const Comment = require('./models/Comment');
-const userRouter = require('./routes/userRouter');
-const postRouter = require('./routes/postRouter');
-const commentRouter = require('./routes/commentRouter');
-const path = require('path');
-const cors = require('cors');
+const userRouter = require("./routes/userRouter");
+const postRouter = require("./routes/postRouter");
+const commentRouter = require("./routes/commentRouter");
+const authRouter = require("./routes/authRouter");
+const subRouter = require("./routes/subdevitRouter");
+const cors = require("cors");
+const User = require("./models/User");
+const Post = require("./models/Post");
+const Comment = require("./models/Comment");
+const cookieSession = require("cookie-session");
+const key = require("./routes/key");
 
 app.use(
   cors({
@@ -17,34 +20,22 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(express.text());
+app.use(
+  cookieSession({
+    maxAge: 24 * 60 * 60 * 1000, //1 day
+    keys: [key.session.cookieKey],
+  })
+);
 
-app.use('/user', userRouter);
-app.use('/post', postRouter), app.use('/comment', commentRouter);
+app.use("/user", userRouter);
+app.use("/post", postRouter);
+app.use("/comment", commentRouter);
+app.use("/auth", authRouter);
+app.use("/sub", subRouter);
+// app.use('/auth', authRouter);
 
-// Create subdevit
-app.post('/sub/new', async (req, res, next) => {
-  const { id, name } = req.body;
-  const sub = await Subveddit.create({ created_by: id, name });
-  const user = await User.findById(id);
-  sub.subscribers.push(user);
-  res.send(sub);
-});
-
-// Get subveddit subscribers
-app.get('/sub/:id/subscribers', async (req, res, next) => {
-  // try {
-  //   const { sub_id } = req.body;
-  //   const sub = await Subveddit.findById(sub_id);
-  //   res.send(sub);
-  // } catch (err) {
-  //   return next(err);
-  // }
-  const { id } = req.params;
-  const sub = await Subveddit.findById(id);
-  res.send(sub);
-});
-
-// console.log(typeof process.env.MONGO_DB);
+//create auth/login route
 
 mongoose.connect(
   'mongodb+srv://carmencarmen:wmPqLPdW1u7nxr2k@cluster0.4fpu4.mongodb.net/devit?retryWrites=true&w=majority',

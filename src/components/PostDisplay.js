@@ -10,6 +10,7 @@ export default function PostDisplay() {
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
+
   const [specificPost, setSpecificPost] = useState(true);
   const [specificPostDetail, setSpecificPostDetail] = useState({
     _id: '62d308eb2967a6bf2963cbfa',
@@ -42,7 +43,6 @@ export default function PostDisplay() {
   }, []);
 
   async function getSpecificPost(e) {
-    console.log(e);
     setSpecificPost(true);
     setSpecificPostDetail(e);
   }
@@ -86,7 +86,7 @@ export default function PostDisplay() {
             padding: '20px',
             gap: '20px',
             borderRadius: 4,
-            overflow: 'auto',
+            overflowY: "auto",
           }}
         >
           {postList}

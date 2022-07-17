@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import {
   Paper,
   TextField,
@@ -15,23 +15,48 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
   const [comments, setComments] = useState([]);
+  const [submitComment, setSubmitComment] = useState("");
+  const user = useSelector((state) => state.user);
 
   const commentArray = [];
   useEffect(() => {
     getSpecificPost();
   }, [comments]);
 
+  // getting comments from the current
+  // hasn't update the entire post fetch yet
+  // need to pass in the entire post
   async function getSpecificPost() {
-    for (let comment of postObject.comments) {
+    const post = await fetch(
+      `http://localhost:3000/post/${postObject._id}`
+    ).then((response) => response.json());
+    const postComments = post.comments;
+    for (let comment of postComments) {
       const user = await fetch(
         `http://localhost:3000/user/${comment.author_id}`
       ).then((response) => response.json());
       commentArray.push(
         <Comment commentInfo={comment} userInfo={user}></Comment>
       );
-
-      setComments(commentArray);
     }
+
+    setComments(commentArray);
+  }
+
+  async function registerComment() {
+    // get user for the state -> need to create reducer for the user to update when the user logs in
+    // need to send author_id, post_id, and content
+    const currentUserId = user.id;
+    const postId = postObject._id;
+    const result = await fetch("http://localhost:3000/comment/new", {
+      method: "POST",
+      body: JSON.stringify({
+        author_id: currentUserId,
+        post_id: postId,
+        content: submitComment,
+      }),
+    });
+    setComments("");
   }
 
   return (
@@ -151,8 +176,13 @@ export function PostSpecific(prop) {
           }}
           multiline
           rows={4}
+          onChange={(e) => {
+            setSubmitComment(e.target.value);
+          }}
         ></TextField>
-        <Button variant="contained">SUBMIT</Button>
+        <Button variant="contained" onClick={registerComment}>
+          SUBMIT
+        </Button>
       </Box>
 
       {/* comment section */}
