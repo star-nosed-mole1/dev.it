@@ -11,10 +11,9 @@ import {
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import { IconButton } from "@mui/material";
+import { IconButton, Divider, CircularProgress } from "@mui/material";
 import { updateUser } from "../redux/reducers/UserSlice";
 import { useDispatch } from "react-redux";
-import { Divider } from "@mui/material";
 
 export function UserProfile() {
   const [loginAccount, setLoginAccount] = useState(true);

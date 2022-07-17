@@ -7,15 +7,18 @@ import {
   Box,
   Avatar,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import moment from "moment";
 import { Comment } from "./Comment";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { CicularProgress } from "@mui/material";
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
   const [comments, setComments] = useState([]);
   const [submitComment, setSubmitComment] = useState("");
+  const [loadingComments, setLoadingComments] = useState(false);
   const user = useSelector((state) => state.user);
 
   const commentArray = [];
@@ -27,6 +30,7 @@ export function PostSpecific(prop) {
   // hasn't update the entire post fetch yet
   // need to pass in the entire post
   async function getSpecificPost() {
+    setLoadingComments(true);
     const post = await fetch(
       `http://localhost:3000/post/${postObject._id}`
     ).then((response) => response.json());
@@ -39,8 +43,11 @@ export function PostSpecific(prop) {
         <Comment commentInfo={comment} userInfo={user}></Comment>
       );
     }
-
-    setComments(commentArray);
+    console.log("test");
+    if (postComments.length !== comments.length) {
+      setComments(commentArray);
+    }
+    setLoadingComments(false);
   }
 
   async function registerComment() {
@@ -56,7 +63,7 @@ export function PostSpecific(prop) {
         content: submitComment,
       }),
     });
-    setComments("");
+    setComments([]);
   }
 
   return (
@@ -156,6 +163,7 @@ export function PostSpecific(prop) {
         </Paper>
       </Box>
 
+      {/* section to submit comments */}
       <Box
         sx={{
           width: "100%",
@@ -185,7 +193,21 @@ export function PostSpecific(prop) {
         </Button>
       </Box>
 
-      {/* comment section */}
+      {loadingComments && (
+        <Box
+          sx={{
+            width: "100%",
+            height: "max-content",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      )}
+      {/* section to display comments */}
       <Box
         sx={{
           height: "100%",
