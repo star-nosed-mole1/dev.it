@@ -23,8 +23,15 @@ export function PostSpecific(prop) {
     getSpecificPost();
   }, [comments]);
 
+  // getting comments from the current
+  // hasn't update the entire post fetch yet
+  // need to pass in the entire post
   async function getSpecificPost() {
-    for (let comment of postObject.comments) {
+    const post = await fetch(
+      `http://localhost:3000/post/${postObject._id}`
+    ).then((response) => response.json());
+    const postComments = post.comments;
+    for (let comment of postComments) {
       const user = await fetch(
         `http://localhost:3000/user/${comment.author_id}`
       ).then((response) => response.json());
@@ -32,6 +39,7 @@ export function PostSpecific(prop) {
         <Comment commentInfo={comment} userInfo={user}></Comment>
       );
     }
+
     setComments(commentArray);
   }
 
