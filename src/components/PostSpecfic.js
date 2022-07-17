@@ -196,6 +196,7 @@ export function PostSpecific(prop) {
       {loadingComments && (
         <Box
           sx={{
+            marginTop: "10px",
             width: "100%",
             height: "max-content",
             display: "flex",

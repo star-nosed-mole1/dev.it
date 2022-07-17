@@ -26,7 +26,7 @@ export function MainDisplay() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
-          gap: "50px",
+          gap: "20px",
           padding: "0px",
           margin: "0px",
         }}

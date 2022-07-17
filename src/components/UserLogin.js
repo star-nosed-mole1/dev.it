@@ -84,7 +84,7 @@ export function UserProfile() {
         elevation={5}
         sx={{
           width: "20vw",
-          height: "50%",
+          height: "max-content",
           borderRadius: "10px",
           display: "flex",
           flexDirection: "column",
@@ -131,7 +131,6 @@ export function UserProfile() {
           {/* area for user to make post */}
           <TextField
             sx={{
-              width: "95%",
               height: "100%",
               padding: "10px",
             }}
@@ -303,26 +302,28 @@ export function UserProfile() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "10px",
-          backgroundColor: "secondary.light",
+          backgroundColor: "primary.light",
           gap: "10px",
         }}
       >
         <TextField
           variant="outlined"
-          placeholder="Username"
+          label="Username"
           sx={{
-            backgroundColor: "primary.light",
+            backgroundColor: "secondary.light",
           }}
           onChange={(e) => {
             setUsername(e.target.value);
           }}
+          required
         ></TextField>
         <TextField
           variant="outlined"
-          placeholder="Password"
+          label="Password"
           type="password"
+          required
           sx={{
-            backgroundColor: "primary.light",
+            backgroundColor: "secondary.light",
           }}
           onChange={(e) => {
             setPassword(e.target.value);
