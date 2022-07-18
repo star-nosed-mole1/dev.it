@@ -12,13 +12,14 @@ const authController = require("../controller/authController");
 const router = express.Router();
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findById(id).then((user) => {
-    done(null, user);
-  });
+passport.deserializeUser((user, done) => {
+  done(null,user)
+  // User.findById(id).then((user) => {
+  //   done(null, user);
+  // });
 });
 
 passport.use(
@@ -43,8 +44,8 @@ passport.use(
 router.get("/login", authController.login);
 router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
 
-router.get("/github/callback", passport.authenticate("github"), (req, res) => {
-  res.send(req.user);
+router.get("/github/callback", passport.authenticate("github"), authController.login, (req, res) => {
+  res.send("LOGIN FREELY");
 });
 
 router.get("/logout");

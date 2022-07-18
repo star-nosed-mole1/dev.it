@@ -3,6 +3,13 @@ const User = require('../models/User');
 const authController = {};
 
 authController.login = (req, res, next) => {
+  console.log(req.user);
+  if (req.user) {
+    console.log('goal reached');
+    res.locals.foundUser = true;
+    res.status = 200;
+    return next();
+  }
   const { username, password } = req.query;
   const foundUser = User.findOne({ username: username, password: password })
     .then((data) => {
