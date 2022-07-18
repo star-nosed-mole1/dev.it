@@ -15,4 +15,8 @@ router.get('/:post_id', postController.getPostsByPostID);
 // Delete post
 router.delete('/:post_id', postController.deletePost);
 
+router.post('/:post_id/upvote', postController.upvote);
+
+router.post('/:post_id/downvote', postController.downvote);
+
 module.exports = router;
