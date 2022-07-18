@@ -21,6 +21,7 @@ export function PostSpecific(prop) {
   const postObject = prop.postDetail;
   const [comments, setComments] = useState([]);
   const [submitComment, setSubmitComment] = useState("");
+  // used as boolean expression showing ciruclar progress loading
   const [loadingComments, setLoadingComments] = useState(false);
   const [userPost, setUserPost] = useState(false);
   const user = useSelector((state) => state.user);
@@ -65,6 +66,7 @@ export function PostSpecific(prop) {
             commentInfo={comment}
             userInfo={user}
             refreshComments={getSpecificPost}
+            resetComments={setComments}
           ></Comment>
         </motion.div>
       );
