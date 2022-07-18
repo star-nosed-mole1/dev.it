@@ -29,4 +29,15 @@ commentController.getComments = async (req, res, next) => {
   }
 };
 
+commentController.deleteComment = async (req, res, next) => {
+  try {
+    const { comment_id } = req.params;
+    const { author_id } = req.body;
+    await Comment.findOneAndDelete({ _id: comment_id, author_id });
+    res.sendStatus(200);
+  } catch (err) {
+    return next(err);
+  }
+};
+
 module.exports = commentController;

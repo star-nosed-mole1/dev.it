@@ -2,17 +2,18 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
-const userRouter = require("./routes/userRouter");
-const postRouter = require("./routes/postRouter");
-const commentRouter = require("./routes/commentRouter");
-const authRouter = require("./routes/authRouter");
-const subRouter = require("./routes/subdevitRouter");
-const cors = require("cors");
-const User = require("./models/User");
-const Post = require("./models/Post");
-const Comment = require("./models/Comment");
-const cookieSession = require("cookie-session");
-const key = require("./routes/key");
+const userRouter = require('./routes/userRouter');
+const postRouter = require('./routes/postRouter');
+const commentRouter = require('./routes/commentRouter');
+const authRouter = require('./routes/authRouter');
+const subRouter = require('./routes/subdevitRouter');
+const cors = require('cors');
+const User = require('./models/User');
+const Post = require('./models/Post');
+const Comment = require('./models/Comment');
+const cookieSession = require('cookie-session');
+const key = require('./routes/key');
+const path = require('path');
 
 app.use(
   cors({
@@ -28,11 +29,18 @@ app.use(
   })
 );
 
-app.use("/user", userRouter);
-app.use("/post", postRouter);
-app.use("/comment", commentRouter);
-app.use("/auth", authRouter);
-app.use("/sub", subRouter);
+if (process.env.NODE_ENV === 'production') {
+  app.use('/dist', express.static(path.join(__dirname, '../dist')));
+  app.get('/', (req, res) => {
+    return res.status(200).sendFile(path.join(__dirname, '../index.html'));
+  });
+}
+
+app.use('/user', userRouter);
+app.use('/post', postRouter);
+app.use('/comment', commentRouter);
+app.use('/auth', authRouter);
+app.use('/sub', subRouter);
 // app.use('/auth', authRouter);
 
 //create auth/login route

@@ -8,7 +8,7 @@ userController.registerUser = async (req, res, next) => {
     const user = await User.create({ username, password, avatar });
     res.send(user);
   } catch (err) {
-    res.send(false);
+    return next(err);
   }
 };
 
@@ -29,7 +29,7 @@ userController.getOneUser = async (req, res, next) => {
   const { id } = req.params;
 
   User.findById(id)
-    .populate('subscribed_to')
+    .populate("subscribed_to")
     .exec((err, user) => {
       if (err) return next(err);
       res.send(user);
