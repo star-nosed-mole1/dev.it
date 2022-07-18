@@ -29,6 +29,8 @@ export function PostSpecific(prop) {
   const [userPost, setUserPost] = useState(false);
   const [upvotes, setUpvotes] = useState(0);
   const [downvotes, setDownvotes] = useState();
+  const [upList, setUpList] = useState([]);
+  const [upNames, setUpNames] = useState([]);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -47,9 +49,37 @@ export function PostSpecific(prop) {
       const result = await axios.get(`http://localhost:3000/post/${_id}`);
       setUpvotes(result.data.upvotes);
       setDownvotes(result.data.downvotes);
+      const upvotedBy = [...new Set(result.data.upvoted_by)];
+      console.log(upvotedBy);
+      setUpList(upvotedBy);
     }
     getKarma();
   }, []);
+
+  useEffect(() => {
+    async function getKarmaList() {
+      const { _id } = postObject;
+      const result = await axios.get(`http://localhost:3000/post/${_id}`);
+      const upvotedBy = [...new Set(result.data.upvoted_by)];
+      console.log(upvotedBy);
+      setUpList(upvotedBy);
+    }
+    getKarmaList();
+  }, [upvotes, downvotes]);
+
+  useEffect(() => {
+    async function getNames() {
+      const arr = [];
+      upList.forEach((id) => {
+        axios.get(`http://localhost:3000/user/${id}`).then((res) => {
+          arr.push(res.data.username);
+        });
+      });
+      setUpNames(arr);
+      console.log(upNames);
+    }
+    getNames();
+  }, [upList]);
 
   async function upvote() {
     const { author_id, _id } = postObject;
@@ -89,12 +119,12 @@ export function PostSpecific(prop) {
   async function getSpecificPost() {
     setLoadingComments(true);
     const post = await fetch(
-      `http://localhost:3000/post/${postObject._id}`,
+      `http://localhost:3000/post/${postObject._id}`
     ).then((response) => response.json());
     const postComments = post.comments;
     for (let comment of postComments) {
       const user = await fetch(
-        `http://localhost:3000/user/${comment.author_id}`,
+        `http://localhost:3000/user/${comment.author_id}`
       ).then((response) => response.json());
       commentArray.push(
         <motion.div
@@ -114,7 +144,7 @@ export function PostSpecific(prop) {
             userInfo={user}
             refreshComments={getSpecificPost}
           ></Comment>
-        </motion.div>,
+        </motion.div>
       );
     }
     if (postComments.length !== comments.length) {
@@ -235,12 +265,13 @@ export function PostSpecific(prop) {
                 exclusive='true'
                 color='primary'
                 onChange={handleVote}
+                aria-label='karma'
               >
                 <ToggleButton value='upvote' aria-label='upvote'>
-                  <ThumbUpIcon />
+                  <ThumbUpIcon color='primary' />
                 </ToggleButton>
                 <ToggleButton value='downvote' aria-label='downvote'>
-                  <ThumbDownIcon />
+                  <ThumbDownIcon color='primary' />
                 </ToggleButton>
               </ToggleButtonGroup>
             </Box>
