@@ -1,13 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
-import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { getPosts } from "../redux/reducers/PostsSlice";
-import Post from "./Post";
-import { PostSpecific } from "./PostSpecfic";
-import { motion } from "framer-motion";
-import { stopRefreshPost } from "../redux/reducers/PostsSlice";
+import React, { useEffect, useState, useRef } from 'react';
+import Box from '@mui/material/Box';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPosts } from '../redux/reducers/PostsSlice';
+import Post from './Post';
+import { PostSpecific } from './PostSpecfic';
+import { motion } from 'framer-motion';
+import { stopRefreshPost } from '../redux/reducers/PostsSlice';
 
-export default function PostDisplay() {
+export default function PostDisplay({ darkMode }) {
   const postState = useSelector((state) => state.posts);
   const refresh = postState.newPost;
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export default function PostDisplay() {
   // need to fetch every now and then or when the user posts new content
   useEffect(() => {
     if (myBox.current !== null) {
-      myBox.current.scrollTo({ top: 0, behavior: "auto" });
+      myBox.current.scrollTo({ top: 0, behavior: 'auto' });
     }
   }, [specificPost]);
 
@@ -54,17 +54,18 @@ export default function PostDisplay() {
           }}
         >
           <Post
+            darkMode={darkMode}
             key={i}
             comments={post.comments}
             content={post.title}
             avatar={post.author_id.avatar}
             username={post.author_id.username}
-            createdAt={post.created_at.split("").slice(0, 10).join("")}
+            createdAt={post.created_at.split('').slice(0, 10).join('')}
             onClick={() => {
               getSpecificPost(post);
             }}
           ></Post>
-        </motion.div>
+        </motion.div>,
       );
       setPostList(array);
     }
@@ -80,15 +81,15 @@ export default function PostDisplay() {
       <div>
         <Box
           sx={{
-            width: "70vw",
+            width: '70vw',
             height: 750,
-            backgroundColor: "secondary.light",
-            display: "flex",
-            flexDirection: "column",
-            padding: "20px",
-            gap: "20px",
+            backgroundColor: darkMode ? 'black' : 'secondary.light',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '20px',
+            gap: '20px',
             borderRadius: 4,
-            overflowY: "auto",
+            overflowY: 'auto',
           }}
         >
           {postList}
@@ -102,19 +103,20 @@ export default function PostDisplay() {
         <Box
           ref={myBox}
           sx={{
-            width: "70vw",
+            width: '70vw',
             height: 700,
-            backgroundColor: "secondary.light",
-            display: "flex",
-            flexDirection: "column",
-            padding: "20px",
-            gap: "20px",
+            backgroundColor: 'secondary.light',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '20px',
+            gap: '20px',
             borderRadius: 4,
-            overflow: "auto",
+            overflow: 'auto',
           }}
         >
           {
             <PostSpecific
+              darkMode={darkMode}
               postDetail={specificPostDetail}
               return={setSpecificPost}
             />

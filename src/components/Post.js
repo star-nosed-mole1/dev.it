@@ -8,7 +8,8 @@ import { useSpring, animated } from 'react-spring';
 export default function Post(prop) {
   const [checked, setChecked] = useState(false);
   const [anchor, setAnchor] = useState(null);
-  const { comments, content, avatar, username, createdAt, onClick } = prop;
+  const { comments, content, avatar, username, createdAt, onClick, darkMode } =
+    prop;
 
   function commentChange() {
     setChecked((prev) => !prev);
@@ -58,6 +59,7 @@ export default function Post(prop) {
         display: 'flex',
         borderRadius: 4,
         fontFamily: 'Quicksand',
+        backgroundColor: darkMode ? 'darkgray' : 'secondary.light',
         '&:hover': {
           backgroundColor: 'secondary.light',
           cursor: 'pointer',
