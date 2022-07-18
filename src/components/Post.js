@@ -57,12 +57,12 @@ export default function Post(prop) {
         height: 55,
         display: 'flex',
         borderRadius: 4,
-        fontFamily: `'Lato', sans-serif`,
+        fontFamily: `'Quicksand', sans-serif`,
         '&:hover': {
           backgroundColor: 'secondary.light',
           cursor: 'pointer',
           '& .content': {
-            fontWeight: 'bold',
+            fontWeight: '600',
           },
           '& .username': {
             maxWidth: '100%',
