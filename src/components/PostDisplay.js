@@ -7,7 +7,7 @@ import { PostSpecific } from "./PostSpecfic";
 import { motion } from "framer-motion";
 import { stopRefreshPost } from "../redux/reducers/PostsSlice";
 
-export default function PostDisplay() {
+export default function PostDisplay({ darkMode }) {
   const postState = useSelector((state) => state.posts);
   const refresh = postState.newPost;
   const dispatch = useDispatch();
@@ -54,6 +54,7 @@ export default function PostDisplay() {
           }}
         >
           <Post
+            darkMode={darkMode}
             key={i}
             comments={post.comments}
             content={post.title}
@@ -82,7 +83,7 @@ export default function PostDisplay() {
           sx={{
             width: "70vw",
             height: 750,
-            backgroundColor: "secondary.light",
+            backgroundColor: darkMode ? "#393E46" : "secondary.light",
             display: "flex",
             flexDirection: "column",
             padding: "20px",
@@ -104,7 +105,7 @@ export default function PostDisplay() {
           sx={{
             width: "70vw",
             height: 700,
-            backgroundColor: "secondary.light",
+            backgroundColor: darkMode ? "#393E46" : "secondary.light",
             display: "flex",
             flexDirection: "column",
             padding: "20px",
@@ -115,6 +116,7 @@ export default function PostDisplay() {
         >
           {
             <PostSpecific
+              darkMode={darkMode}
               postDetail={specificPostDetail}
               return={setSpecificPost}
             />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {
   Avatar,
@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { refreshPost } from "../redux/reducers/PostsSlice";
 import { motion } from "framer-motion";
 
-export function UserProfile() {
+export function UserProfile({ darkMode }) {
   const [loginAccount, setLoginAccount] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +24,7 @@ export function UserProfile() {
   const [avatar, setAvatar] = useState("");
   const [statusRegistration, setStatusRegistration] = useState("");
   const [statusColor, setStatusColor] = useState("");
+  const [karma, setKarma] = useState(0);
 
   // state for posts
   const [title, setTitle] = useState("");
@@ -39,12 +40,26 @@ export function UserProfile() {
     ).then((response) => response.json());
     if (data) {
       // send dispatch
+      console.log(data);
       dispatch(updateUser(data));
+      setKarma(data.devutation);
       setAvatar(data.avatar);
       setUserId(data._id);
       setLoggedIn(true);
     }
   }
+
+  // useEffect(() => {
+  //   async function getKarma() {
+  //     const data = await axios.get(
+  //       `http://localhost:3000/auth/login?username=${username}&password=${password}`
+  //     );
+  //     if (data) {
+  //       setKarma(data.devutation);
+  //     }
+  //   }
+  //   getKarma();
+  // }, []);
 
   function logoutUser() {
     dispatch(
@@ -103,7 +118,7 @@ export function UserProfile() {
           flexDirection: "column",
           justifyContent: "flex-start",
           padding: "20px",
-          backgroundColor: "secondary.light",
+          backgroundColor: darkMode ? "black" : "secondary.light",
           gap: "10px",
         }}
       >
@@ -129,6 +144,17 @@ export function UserProfile() {
             }}
           >
             {username}
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: "Quicksand",
+              fontSize: "1.45vh",
+              marginLeft: "auto",
+              marginRight: "0",
+              alignSelf: "flex-end",
+            }}
+          >
+            {karma} devutation
           </Typography>
         </Box>
         <Divider />
@@ -239,7 +265,7 @@ export function UserProfile() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "10px",
-          backgroundColor: "primary.light",
+          backgroundColor: darkMode ? "#393E46" : "primary.light",
           gap: "10px",
         }}
       >
@@ -288,6 +314,7 @@ export function UserProfile() {
               fontWeight: 500,
               fontSize: "0.7em",
               textAlign: "center",
+              color: darkMode ? "primary.light" : "primary.light",
               "&:hover": {
                 color: "primary.dark",
                 transitionDuration: "0.5s",
@@ -311,7 +338,7 @@ export function UserProfile() {
           flexDirection: "column",
           justifyContent: "center",
           padding: "10px",
-          backgroundColor: "primary.light",
+          backgroundColor: darkMode ? "#393E46" : "primary.light",
           gap: "10px",
         }}
       >
