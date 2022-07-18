@@ -10,6 +10,7 @@ import {
   CircularProgress,
   ToggleButton,
   ToggleButtonGroup,
+  Popover,
 } from '@mui/material';
 import moment from 'moment';
 import { Comment } from './Comment';
@@ -31,6 +32,7 @@ export function PostSpecific(prop) {
   const [downvotes, setDownvotes] = useState();
   const [upList, setUpList] = useState([]);
   const [upNames, setUpNames] = useState([]);
+  const [anchor, setAnchor] = useState(null);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -42,6 +44,16 @@ export function PostSpecific(prop) {
       setUserPost(true);
     }
   }, [comments]);
+
+  function popoverOpen(e) {
+    setAnchor(e.currentTarget);
+  }
+
+  const open = Boolean(anchor);
+
+  function popoverClose() {
+    setAnchor(null);
+  }
 
   useEffect(() => {
     async function getKarma() {
@@ -61,7 +73,6 @@ export function PostSpecific(prop) {
       const { _id } = postObject;
       const result = await axios.get(`http://localhost:3000/post/${_id}`);
       const upvotedBy = [...new Set(result.data.upvoted_by)];
-      console.log(upvotedBy);
       setUpList(upvotedBy);
     }
     getKarmaList();
@@ -286,7 +297,11 @@ export function PostSpecific(prop) {
             >
               {postObject.content}
             </Typography>
-            <span
+            <Typography
+              aria-owns={open ? 'popover' : undefined}
+              aria-haspopup='true'
+              onMouseEnter={popoverOpen}
+              onMouseLeave={popoverClose}
               style={{
                 display: 'flex',
                 justifyContent: 'flex-end',
@@ -296,7 +311,27 @@ export function PostSpecific(prop) {
               }}
             >
               {upvotes - downvotes} devutation
-            </span>
+            </Typography>
+            <Popover
+              id='popover'
+              open={open}
+              anchorEl={anchor}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              onClose={popoverClose}
+              disableRestoreFocus
+              sx={{
+                pointerEvents: 'none',
+              }}
+            >
+              <Typography>{upNames}</Typography>
+            </Popover>
           </Box>
           <Box
             sx={{
