@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import CommentIcon from "@mui/icons-material/Comment";
-import { Paper, Typography, Avatar, IconButton, Popover } from "@mui/material";
+import {
+  Paper,
+  Typography,
+  Avatar,
+  IconButton,
+  Popover,
+  Box,
+} from "@mui/material";
 import Badge from "@mui/material/Badge";
 import moment from "moment";
 import { useSpring, animated } from "react-spring";
@@ -56,11 +63,12 @@ export default function Post(prop) {
       sx={{
         height: 55,
         display: "flex",
+        height: "max-content",
         borderRadius: 4,
         fontFamily: "Quicksand",
         backgroundColor: "white",
         "&:hover": {
-          backgroundColor: "secondary.light",
+          backgroundColor: "secondary.main",
           cursor: "pointer",
           "& .content": {
             fontWeight: "600",
@@ -151,25 +159,24 @@ export default function Post(prop) {
           justifyContent: "center",
         }}
       >
-        <span
-          className="content"
-          style={{
+        <Box
+          sx={{
             width: "100%",
-            fontSize: "18px",
-            textAlign: "center",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
-            textOverflow: "ellipsis",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          <span
-            style={{
-              maxWidth: "600px",
+          <Typography
+            sx={{
+              fontFamily: "Quicksand",
+              fontSize: "1em",
+              textAlign: "center",
+              fontWeight: 500,
             }}
           >
             {content}
-          </span>
-        </span>
+          </Typography>
+        </Box>
         <animated.span style={commentStyle}>
           <Badge
             badgeContent={comments.length}
