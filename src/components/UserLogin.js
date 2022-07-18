@@ -362,17 +362,20 @@ export function UserProfile() {
             REGISTER
           </Typography>
         </Button>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#1565c0",
-            "&:hover": {
-              backgroundColor: "#42a5f5",
-            },
-          }}
-        >
-          <GoogleIcon></GoogleIcon>
-        </Button>
+        <a href="http://localhost:3000/auth/google">
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#1565c0",
+              width: "100%",
+              "&:hover": {
+                backgroundColor: "#42a5f5",
+              },
+            }}
+          >
+            <GoogleIcon></GoogleIcon>
+          </Button>
+        </a>
         <a href="http://localhost:3000/auth/github">
           <Button
             variant="contained"
