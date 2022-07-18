@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   Paper,
   TextField,
@@ -15,6 +15,7 @@ import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import { motion } from "framer-motion";
+import { refreshPost } from "../redux/reducers/PostsSlice";
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
@@ -23,6 +24,7 @@ export function PostSpecific(prop) {
   const [loadingComments, setLoadingComments] = useState(false);
   const [userPost, setUserPost] = useState(false);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const commentArray = [];
   useEffect(() => {
@@ -85,13 +87,17 @@ export function PostSpecific(prop) {
     setComments([]);
   }
 
-  async function deleteComment() {
+  async function deletePost() {
+    const postId = postObject._id;
+    const currentUserId = user.id;
     const response = await fetch(`http://localhost:3000/post/${postId}`, {
       method: "DELETE",
       body: JSON.stringify({
         author_id: currentUserId,
       }),
     });
+    dispatch(refreshPost());
+    prop.return(false);
   }
 
   return (
@@ -219,6 +225,7 @@ export function PostSpecific(prop) {
                       },
                       transitionDuration: "0.3s",
                     }}
+                    onClick={deletePost}
                   >
                     Delete Post
                   </Typography>
