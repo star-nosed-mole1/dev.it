@@ -6,6 +6,7 @@ import logo from '../assets/devit.png';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { motion } from 'framer-motion';
 
+
 export function NavBar() {
   return (
     <AppBar
