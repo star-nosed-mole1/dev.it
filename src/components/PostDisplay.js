@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../redux/reducers/PostsSlice';
+import LinearProgress from '@mui/material/LinearProgress';
 import Post from './Post';
 import { PostSpecific } from './PostSpecfic';
 
@@ -10,8 +11,9 @@ export default function PostDisplay() {
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
+  const myBox = useRef(null);
 
-  const [specificPost, setSpecificPost] = useState(true);
+  const [specificPost, setSpecificPost] = useState(false);
   const [specificPostDetail, setSpecificPostDetail] = useState({
     _id: '62d308eb2967a6bf2963cbfa',
     author_id: {
@@ -39,11 +41,16 @@ export default function PostDisplay() {
   const array = [];
 
   useEffect(() => {
+    if (myBox.current !== null) {
+      myBox.current.scrollTo({ top: 0, behavior: 'auto' });
+    }
+  }, [specificPost]);
+
+  useEffect(() => {
     dispatch(getPosts());
   }, []);
 
   async function getSpecificPost(e) {
-    console.log(e);
     setSpecificPost(true);
     setSpecificPostDetail(e);
   }
@@ -51,7 +58,6 @@ export default function PostDisplay() {
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
       const post = postState.postsArray[i];
-      console.log(post.comments);
       array.push(
         <Post
           key={i}
@@ -86,11 +92,20 @@ export default function PostDisplay() {
             flexDirection: 'column',
             padding: '20px',
             gap: '20px',
-            borderRadius: 4,
-            overflowY: "auto",
+            borderRadius: 2,
+            overflowY: 'auto',
           }}
         >
           {postList}
+          <LinearProgress
+            color='secondary'
+            sx={{
+              position: 'relative',
+              top: '50%',
+              left: '15%',
+              width: '70%',
+            }}
+          />
         </Box>
       </div>
     );
@@ -99,6 +114,7 @@ export default function PostDisplay() {
     return (
       <div>
         <Box
+          ref={myBox}
           sx={{
             width: '70vw',
             height: 700,
