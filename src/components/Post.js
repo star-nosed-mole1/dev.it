@@ -57,12 +57,12 @@ export default function Post(prop) {
         height: 55,
         display: 'flex',
         borderRadius: 4,
-        fontFamily: `'Lato', sans-serif`,
+        fontFamily: 'Quicksand',
         '&:hover': {
           backgroundColor: 'secondary.light',
           cursor: 'pointer',
           '& .content': {
-            fontWeight: 'bold',
+            fontWeight: '600',
           },
           '& .username': {
             maxWidth: '100%',
@@ -126,6 +126,9 @@ export default function Post(prop) {
             maxWidth: '75px',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            '&:hover': {
+              textDecoration: 'underline',
+            },
           }}
         >
           {username}
@@ -158,7 +161,13 @@ export default function Post(prop) {
             textOverflow: 'ellipsis',
           }}
         >
-          {content}
+          <span
+            style={{
+              maxWidth: '600px',
+            }}
+          >
+            {content}
+          </span>
         </span>
         <animated.span style={commentStyle}>
           <Badge

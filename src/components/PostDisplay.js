@@ -80,13 +80,13 @@ export default function PostDisplay() {
       <div>
         <Box
           sx={{
-            width: "70vw",
-            height: 700,
-            backgroundColor: "secondary.light",
-            display: "flex",
-            flexDirection: "column",
-            padding: "20px",
-            gap: "20px",
+            width: '70vw',
+            height: 750,
+            backgroundColor: 'secondary.light',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '20px',
+            gap: '20px',
             borderRadius: 4,
             overflowY: "auto",
           }}
