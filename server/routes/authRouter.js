@@ -49,7 +49,7 @@ async (accessToken, refreshToken, profile, done) => {
   if (foundUser) {
     done(null, foundUser);
   } else {
-    const newUser = await User.create({ googleID: profile.id });
+    const newUser = await User.create({  username: profile.username, avatar:profile.photos[0].value, googleID: profile.id });
     done(null, newUser);
   }
 }));
