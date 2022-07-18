@@ -1,5 +1,5 @@
-const Comment = require('../models/Comment');
-const Post = require('../models/Post');
+const Comment = require("../models/Comment");
+const Post = require("../models/Post");
 
 const commentController = {};
 
@@ -13,7 +13,7 @@ commentController.newComment = async (req, res, next) => {
         comments: comment,
       },
     },
-    { safe: true, upsert: true },
+    { safe: true, upsert: true }
   )
     .then((data) => res.send(data))
     .catch((err) => next(err));
@@ -31,9 +31,9 @@ commentController.getComments = async (req, res, next) => {
 
 commentController.deleteComment = async (req, res, next) => {
   try {
-    const { post_id } = req.params;
-    const { comment_id } = req.body;
-    await Comment.findOneAndDelete({ _id: post_id, author_id });
+    const { comment_id } = req.params;
+    const { author_id } = req.body;
+    await Comment.findOneAndDelete({ _id: comment_id, author_id });
     res.sendStatus(200);
   } catch (err) {
     return next(err);

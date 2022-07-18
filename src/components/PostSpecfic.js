@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Paper,
   TextField,
@@ -17,17 +17,24 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { motion } from 'framer-motion';
+import { refreshPost } from '../redux/reducers/PostsSlice';
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
   const [comments, setComments] = useState([]);
   const [submitComment, setSubmitComment] = useState('');
   const [loadingComments, setLoadingComments] = useState(false);
+  const [userPost, setUserPost] = useState(false);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   const commentArray = [];
   useEffect(() => {
     getSpecificPost();
+
+    if (postObject.author_id._id === user.id) {
+      setUserPost(true);
+    }
   }, [comments]);
 
   async function upvote() {
@@ -94,6 +101,19 @@ export function PostSpecific(prop) {
       }),
     });
     setComments([]);
+  }
+
+  async function deletePost() {
+    const postId = postObject._id;
+    const currentUserId = user.id;
+    const response = await fetch(`http://localhost:3000/post/${postId}`, {
+      method: 'DELETE',
+      body: JSON.stringify({
+        author_id: currentUserId,
+      }),
+    });
+    dispatch(refreshPost());
+    prop.return(false);
   }
 
   return (
@@ -207,18 +227,55 @@ export function PostSpecific(prop) {
               height: '100%',
               display: 'flex',
               flexDirection: 'row',
-              justifyContent: 'flex-end',
+              justifyContent: 'flex-start',
               alignItems: 'flex-end',
             }}
           >
-            <Typography
+            <Box
               sx={{
-                fontFamily: 'Quicksand',
-                fontSize: '0.6em',
+                width: '20%',
               }}
             >
-              {moment(postObject.created_at).format('MMMM D Y h:mm:ss')}
-            </Typography>
+              {userPost && (
+                <a>
+                  <Typography
+                    sx={{
+                      fontSize: '0.4em',
+                      padding: '0px',
+                      margin: '0px',
+                      color: '#2196f3',
+                      textDecoration: 'underline',
+                      fontStyle: 'italic',
+                      '&:hover': {
+                        color: '#64b5f6',
+                      },
+                      transitionDuration: '0.3s',
+                    }}
+                    onClick={deletePost}
+                  >
+                    Delete Post
+                  </Typography>
+                </a>
+              )}
+            </Box>
+
+            <Box
+              sx={{
+                width: '80%',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: 'Quicksand',
+                  fontSize: '0.6em',
+                }}
+              >
+                {moment(postObject.created_at).format('MMMM D Y h:mm:ss')}
+              </Typography>
+            </Box>
           </Box>
         </Paper>
       </Box>
