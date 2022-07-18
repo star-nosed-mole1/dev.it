@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
 import logo from "../assets/devit_logo.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { motion } from "framer-motion";
 
 export function NavBar() {
   return (

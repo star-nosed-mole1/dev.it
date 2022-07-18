@@ -194,6 +194,10 @@ export function PostSpecific(prop) {
               {moment(postObject.created_at).format("MMMM D Y h:mm:ss")}
             </Typography>
           </Box>
+          {/* for delete section */}
+          <Box>
+            <Typography></Typography>
+          </Box>
         </Paper>
       </Box>
 
