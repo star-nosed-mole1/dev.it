@@ -5,15 +5,25 @@ import { Box } from '@mui/system';
 import logo from '../assets/devit.png';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import { motion } from 'framer-motion';
+import { BsSun, BsSunFill } from 'react-icons/bs';
 
+export function NavBar({ darkMode, setDarkMode }) {
+  const handleClick = () => {
+    if (darkMode) {
+      localStorage.setItem('darkMode', false);
+      setDarkMode(false);
+    } else {
+      localStorage.setItem('darkMode', true);
+      setDarkMode(true);
+    }
+  };
 
-export function NavBar() {
   return (
     <AppBar
       sx={{
         width: '100%',
         height: '8%',
-        backgroundColor: 'primary.light',
+        backgroundColor: darkMode ? 'black' : 'primary.light',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -61,6 +71,9 @@ export function NavBar() {
           <a href='https://github.com/star-nosed-mole1/dev.it' target='_blank'>
             <GitHubIcon></GitHubIcon>
           </a>
+        </IconButton>
+        <IconButton onClick={handleClick}>
+          {darkMode ? <BsSunFill style={{ color: 'white' }} /> : <BsSun />}
         </IconButton>
       </Box>
     </AppBar>
