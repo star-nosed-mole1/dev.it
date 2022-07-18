@@ -12,6 +12,20 @@ const commentSchema = new mongoose.Schema(
       ref: 'Post',
       required: true,
     },
+    upvote: {
+      type: Number,
+      default: 0,
+    },
+    upvoted_by: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User', unique: true },
+    ],
+    downvotes: {
+      type: Number,
+      default: 0,
+    },
+    downvoted_by: [
+      { type: mongoose.Schema.Types.ObjectId, ref: 'User', unique: true },
+    ],
     created_at: {
       type: Date,
       default: Date.now,
