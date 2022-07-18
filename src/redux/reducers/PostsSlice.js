@@ -4,15 +4,18 @@ import axios from "axios";
 const initialState = {
   // posts are objects with information
   postsArray: [],
+  newPost: false,
 };
 
 const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    addComment(state, action) {
-      // add comment to a specific post by looping through the array
-      // getting specific id of the post then add it to the array of comments
+    refreshPost(state) {
+      state.newPost = true;
+    },
+    stopRefreshPost(state) {
+      state.newPost = false;
     },
   },
   extraReducers(builder) {
@@ -36,3 +39,4 @@ export const getPosts = createAsyncThunk("posts/getPosts", async (url) => {
 });
 
 export default postsSlice.reducer;
+export const { refreshPost, stopRefreshPost } = postsSlice.actions;

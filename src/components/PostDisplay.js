@@ -5,9 +5,11 @@ import { getPosts } from "../redux/reducers/PostsSlice";
 import Post from "./Post";
 import { PostSpecific } from "./PostSpecfic";
 import { motion } from "framer-motion";
+import { stopRefreshPost } from "../redux/reducers/PostsSlice";
 
 export default function PostDisplay() {
   const postState = useSelector((state) => state.posts);
+  const refresh = postState.newPost;
   const arrayRerender = postState.postsArray;
   const dispatch = useDispatch();
   const [postList, setPostList] = useState([]);
@@ -17,6 +19,8 @@ export default function PostDisplay() {
 
   const array = [];
 
+  // right now it is only fetching once
+  // need to fetch every now and then or when the user posts new content
   useEffect(() => {
     dispatch(getPosts());
   }, []);
@@ -29,12 +33,8 @@ export default function PostDisplay() {
   useEffect(() => {
     for (let i = 0; i < postState.postsArray.length; i++) {
       const post = postState.postsArray[i];
-      console.log(post.comments);
       array.push(
         <motion.div
-          // whileHover={{
-          //   scale: 1.01,
-          // }}
           animate={{
             marginTop: 0,
             opacity: 1,
@@ -62,12 +62,12 @@ export default function PostDisplay() {
       );
       setPostList(array);
     }
-    // array.map((post, i) => {
-    //   <Post id={i} content={post.content} />;
-    // });
   }, [postState.postsArray]);
-  // creating an array
-  // push new post component
+
+  if (refresh) {
+    dispatch(getPosts());
+    dispatch(stopRefreshPost());
+  }
 
   if (!specificPost) {
     return (
