@@ -4,7 +4,6 @@ const authController = {};
 
 authController.login = (req, res, next) => {
   if (req.user) {
-    console.log('goal reached');
     res.locals.foundUser = true;
     res.status = 200;
     return next();
