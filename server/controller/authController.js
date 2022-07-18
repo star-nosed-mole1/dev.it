@@ -3,7 +3,6 @@ const User = require('../models/User');
 const authController = {};
 
 authController.login = (req, res, next) => {
-  console.log(req.user);
   if (req.user) {
     console.log('goal reached');
     res.locals.foundUser = true;
