@@ -8,6 +8,8 @@ import {
   Avatar,
   Typography,
   CircularProgress,
+  ToggleButton,
+  ToggleButtonGroup,
 } from '@mui/material';
 import moment from 'moment';
 import { Comment } from './Comment';
@@ -16,6 +18,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import { motion } from 'framer-motion';
 import { refreshPost } from '../redux/reducers/PostsSlice';
+import axios from 'axios';
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
@@ -24,6 +27,8 @@ export function PostSpecific(prop) {
   const [submitComment, setSubmitComment] = useState('');
   const [loadingComments, setLoadingComments] = useState(false);
   const [userPost, setUserPost] = useState(false);
+  const [upvotes, setUpvotes] = useState(0);
+  const [downvotes, setDownvotes] = useState();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -35,6 +40,40 @@ export function PostSpecific(prop) {
       setUserPost(true);
     }
   }, [comments]);
+
+  useEffect(() => {
+    async function getKarma() {
+      const { _id } = postObject;
+      const result = await axios.get(`http://localhost:3000/post/${_id}`);
+      setUpvotes(result.data.upvotes);
+      setDownvotes(result.data.downvotes);
+    }
+    getKarma();
+  }, []);
+
+  async function upvote() {
+    const { author_id, _id } = postObject;
+    const authorId = author_id._id;
+    const result = await axios.post(
+      `http://localhost:3000/post/${_id}/upvote`,
+      {
+        user_id: authorId,
+      }
+    );
+    setUpvotes(result.data.upvotes);
+  }
+
+  async function downvote() {
+    const { author_id, _id } = postObject;
+    const authorId = author_id._id;
+    const result = await axios.post(
+      `http://localhost:3000/post/${_id}/downvote`,
+      {
+        user_id: authorId,
+      }
+    );
+    setDownvotes(result.data.downvotes);
+  }
 
   // getting comments from the current
   // hasn't update the entire post fetch yet
@@ -168,6 +207,10 @@ export function PostSpecific(prop) {
               sx={{
                 fontFamily: 'Quicksand',
                 fontWeight: 600,
+                minWidth: '91%',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
             >
               {postObject.title}
@@ -180,15 +223,24 @@ export function PostSpecific(prop) {
                 width: '100%',
               }}
             >
-              <Button>
-                <ThumbUpIcon></ThumbUpIcon>
-              </Button>
-              <Button>
-                <ThumbDownIcon></ThumbDownIcon>
-              </Button>
+              <ToggleButtonGroup exclusive='true' color='secondary'>
+                <ToggleButton
+                  onClick={() => upvote()}
+                  value='upvote'
+                  aria-label='upvote'
+                >
+                  <ThumbUpIcon />
+                </ToggleButton>
+                <ToggleButton
+                  onClick={() => downvote()}
+                  value='downvote'
+                  aria-label='downvote'
+                >
+                  <ThumbDownIcon />
+                </ToggleButton>
+              </ToggleButtonGroup>
             </Box>
           </Box>
-
           {/* section for content */}
           <Box>
             <Typography
@@ -199,6 +251,17 @@ export function PostSpecific(prop) {
             >
               {postObject.content}
             </Typography>
+            <span
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                fontFamily: 'Quicksand',
+                fontWeight: 400,
+                fontSize: '1.4vh',
+              }}
+            >
+              {upvotes - downvotes} devutation
+            </span>
           </Box>
           <Box
             sx={{

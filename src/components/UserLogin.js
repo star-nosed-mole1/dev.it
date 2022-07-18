@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import {
   Avatar,
@@ -24,6 +24,7 @@ export function UserProfile({ darkMode }) {
   const [avatar, setAvatar] = useState('');
   const [statusRegistration, setStatusRegistration] = useState('');
   const [statusColor, setStatusColor] = useState('');
+  const [karma, setKarma] = useState(0);
 
   // state for posts
   const [title, setTitle] = useState('');
@@ -39,12 +40,26 @@ export function UserProfile({ darkMode }) {
     ).then((response) => response.json());
     if (data) {
       // send dispatch
+      console.log(data);
       dispatch(updateUser(data));
+      setKarma(data.devutation);
       setAvatar(data.avatar);
       setUserId(data._id);
       setLoggedIn(true);
     }
   }
+
+  // useEffect(() => {
+  //   async function getKarma() {
+  //     const data = await axios.get(
+  //       `http://localhost:3000/auth/login?username=${username}&password=${password}`
+  //     );
+  //     if (data) {
+  //       setKarma(data.devutation);
+  //     }
+  //   }
+  //   getKarma();
+  // }, []);
 
   function logoutUser() {
     dispatch(
@@ -129,6 +144,17 @@ export function UserProfile({ darkMode }) {
             }}
           >
             {username}
+          </Typography>
+          <Typography
+            sx={{
+              fontFamily: 'Quicksand',
+              fontSize: '1.45vh',
+              marginLeft: 'auto',
+              marginRight: '0',
+              alignSelf: 'flex-end',
+            }}
+          >
+            {karma} devutation
           </Typography>
         </Box>
         <Divider />
