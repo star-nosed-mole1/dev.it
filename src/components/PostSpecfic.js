@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Paper,
   TextField,
@@ -8,18 +8,20 @@ import {
   Avatar,
   Typography,
   CircularProgress,
-} from "@mui/material";
-import moment from "moment";
-import { Comment } from "./Comment";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-import { motion } from "framer-motion";
+  ToggleButton,
+  ToggleButtonGroup,
+} from '@mui/material';
+import moment from 'moment';
+import { Comment } from './Comment';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { motion } from 'framer-motion';
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
   const [comments, setComments] = useState([]);
-  const [submitComment, setSubmitComment] = useState("");
+  const [submitComment, setSubmitComment] = useState('');
   const [loadingComments, setLoadingComments] = useState(false);
   const user = useSelector((state) => state.user);
 
@@ -27,6 +29,20 @@ export function PostSpecific(prop) {
   useEffect(() => {
     getSpecificPost();
   }, [comments]);
+
+  async function upvote() {
+    const { author_id, _id } = postObject;
+    const authorId = author_id._id;
+    console.log('authorID: ', authorId);
+    console.log('postId: ', _id);
+  }
+
+  async function downvote() {
+    const { author_id, _id } = postObject;
+    const authorId = author_id._id;
+    console.log('authorID: ', authorId);
+    console.log('postId: ', _id);
+  }
 
   // getting comments from the current
   // hasn't update the entire post fetch yet
@@ -69,8 +85,8 @@ export function PostSpecific(prop) {
     // need to send author_id, post_id, and content
     const currentUserId = user.id;
     const postId = postObject._id;
-    const result = await fetch("http://localhost:3000/comment/new", {
-      method: "POST",
+    const result = await fetch('http://localhost:3000/comment/new', {
+      method: 'POST',
       body: JSON.stringify({
         author_id: currentUserId,
         post_id: postId,
@@ -83,16 +99,16 @@ export function PostSpecific(prop) {
   return (
     <Box
       sx={{
-        height: "100%",
-        width: "100%",
-        padding: "0px",
-        margin: "0px",
+        height: '100%',
+        width: '100%',
+        padding: '0px',
+        margin: '0px',
       }}
     >
       {/* back arrow to return to all posts */}
       <Button
         sx={{
-          marginBottom: "10px",
+          marginBottom: '10px',
         }}
         onClick={() => {
           prop.return(false);
@@ -104,44 +120,44 @@ export function PostSpecific(prop) {
       {/* content section */}
       <Box
         sx={{
-          width: "100%",
-          height: "max-content",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "flex-start",
-          gap: "10px",
+          width: '100%',
+          height: 'max-content',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          gap: '10px',
         }}
       >
         <Avatar
           atl={postObject.author_id.username}
           src={postObject.author_id.avatar}
           sx={{
-            width: "10%",
-            height: "10%",
+            width: '10%',
+            height: '10%',
           }}
         ></Avatar>
         <Paper
           elevation={9}
           sx={{
-            width: "100%",
-            height: "max-content",
-            display: "flex",
-            flexDirection: "column",
-            padding: "10px",
-            gap: "20px",
+            width: '100%',
+            height: 'max-content',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '10px',
+            gap: '20px',
           }}
         >
           {/* section for title */}
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "row",
+              display: 'flex',
+              flexDirection: 'row',
             }}
           >
             <Typography
               sx={{
-                fontFamily: "Quicksand",
+                fontFamily: 'Quicksand',
                 fontWeight: 600,
               }}
             >
@@ -149,18 +165,28 @@ export function PostSpecific(prop) {
             </Typography>
             <Box
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                width: "100%",
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                width: '100%',
               }}
             >
-              <Button>
-                <ThumbUpIcon></ThumbUpIcon>
-              </Button>
-              <Button>
-                <ThumbDownIcon></ThumbDownIcon>
-              </Button>
+              <ToggleButtonGroup color='secondary'>
+                <ToggleButton
+                  onClick={() => upvote()}
+                  value='upvote'
+                  aria-label='upvote'
+                >
+                  <ThumbUpIcon />
+                </ToggleButton>
+                <ToggleButton
+                  onClick={() => downvote()}
+                  value='downvote'
+                  aria-label='downvote'
+                >
+                  <ThumbDownIcon />
+                </ToggleButton>
+              </ToggleButtonGroup>
             </Box>
           </Box>
 
@@ -168,7 +194,7 @@ export function PostSpecific(prop) {
           <Box>
             <Typography
               sx={{
-                fontFamily: "Quicksand",
+                fontFamily: 'Quicksand',
                 fontWeight: 400,
               }}
             >
@@ -177,21 +203,21 @@ export function PostSpecific(prop) {
           </Box>
           <Box
             sx={{
-              width: "100%",
-              height: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-end",
-              alignItems: "flex-end",
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'flex-end',
             }}
           >
             <Typography
               sx={{
-                fontFamily: "Quicksand",
-                fontSize: "0.6em",
+                fontFamily: 'Quicksand',
+                fontSize: '0.6em',
               }}
             >
-              {moment(postObject.created_at).format("MMMM D Y h:mm:ss")}
+              {moment(postObject.created_at).format('MMMM D Y h:mm:ss')}
             </Typography>
           </Box>
         </Paper>
@@ -200,21 +226,21 @@ export function PostSpecific(prop) {
       {/* section to submit comments */}
       <Box
         sx={{
-          width: "100%",
-          height: "max-content",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "flex-end",
-          marginTop: "20px",
-          gap: "10px",
+          width: '100%',
+          height: 'max-content',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+          marginTop: '20px',
+          gap: '10px',
         }}
       >
         <TextField
-          variant="outlined"
-          placeholder="Enter a comment"
+          variant='outlined'
+          placeholder='Enter a comment'
           sx={{
-            width: "100%",
+            width: '100%',
           }}
           multiline
           rows={4}
@@ -222,7 +248,7 @@ export function PostSpecific(prop) {
             setSubmitComment(e.target.value);
           }}
         ></TextField>
-        <Button variant="contained" onClick={registerComment}>
+        <Button variant='contained' onClick={registerComment}>
           SUBMIT
         </Button>
       </Box>
@@ -230,13 +256,13 @@ export function PostSpecific(prop) {
       {loadingComments && (
         <Box
           sx={{
-            marginTop: "10px",
-            width: "100%",
-            height: "max-content",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
+            marginTop: '10px',
+            width: '100%',
+            height: 'max-content',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <CircularProgress />
@@ -245,10 +271,10 @@ export function PostSpecific(prop) {
       {/* section to display comments */}
       <Box
         sx={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         {comments}
