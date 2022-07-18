@@ -45,7 +45,7 @@ router.get("/login", authController.login);
 router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
 
 router.get("/github/callback", passport.authenticate("github"), authController.login, (req, res) => {
-  res.send("LOGIN FREELY");
+  res.redirect("/");
 });
 
 router.get("/logout");
