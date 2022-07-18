@@ -1,41 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import CommentIcon from '@mui/icons-material/Comment';
-import { Paper, Typography, Avatar, IconButton } from '@mui/material';
+import { Paper, Typography, Avatar, IconButton, Popover } from '@mui/material';
 import Badge from '@mui/material/Badge';
 import moment from 'moment';
 import { useSpring, animated } from 'react-spring';
 
 export default function Post(prop) {
   const [checked, setChecked] = useState(false);
+  const [anchor, setAnchor] = useState(null);
   const { comments, content, avatar, username, createdAt, onClick } = prop;
 
   function commentChange() {
     setChecked((prev) => !prev);
   }
 
-  function onlineAvatar() {
-    const randomNum = Math.floor(Math.random() * 10);
-    if (randomNum > 4) {
-      return (
-        <Avatar
-          src={avatar}
-          sx={{
-            padding: '5px',
-            alignSelf: 'center',
-          }}
-        />
-      );
-    } else {
-      return (
-        <StyledBadge
-          overlap='circular'
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          variant='dot'
-        >
-          <Avatar src={avatar} sx={{ padding: '5px', alignSelf: 'center' }} />
-        </StyledBadge>
-      );
-    }
+  function popoverOpen(e) {
+    setAnchor(e.currentTarget);
+  }
+
+  const open = Boolean(anchor);
+
+  function popoverClose() {
+    setAnchor(null);
   }
 
   useEffect(() => {
@@ -53,7 +39,7 @@ export default function Post(prop) {
     display: 'inline-block',
     backfaceVisibility: 'hidden',
     transform: checked
-      ? 'translate(0px, 0px) rotate(0deg) scale(1.3)'
+      ? 'translate(0px, 0px) rotate(0deg) scale(1.35)'
       : 'translate(0px, 0px) rotate(0deg) scale(1)',
     config: {
       tension: 400,
@@ -79,18 +65,46 @@ export default function Post(prop) {
       }}
       onClick={onClick}
     >
-      {
+      <Avatar
+        aria-owns={open ? 'popover' : undefined}
+        aria-haspopup='true'
+        onMouseEnter={popoverOpen}
+        onMouseLeave={popoverClose}
+        src={avatar}
+        sx={{
+          padding: '5px',
+          alignSelf: 'center',
+        }}
+      />
+      <Popover
+        id='popover'
+        open={open}
+        anchorEl={anchor}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        onClose={popoverClose}
+        disableRestoreFocus
+        sx={{
+          pointerEvents: 'none',
+        }}
+      >
         <Avatar
+          variant='rounded'
           src={avatar}
           sx={{
-            padding: '5px',
-            alignSelf: 'center',
+            zoom: 3,
           }}
         />
-      }
+      </Popover>
 
-      <span
-        style={{
+      <Typography
+        sx={{
           paddingLeft: '10px',
           display: 'flex',
           flexDirection: 'column',
@@ -98,26 +112,26 @@ export default function Post(prop) {
           padding: '5px',
         }}
       >
-        <span
-          style={{
-            fontSize: '15px',
+        <Typography
+          sx={{
+            fontSize: '13px',
             whiteSpace: 'nowrap',
-            maxWidth: '100px',
+            maxWidth: '80px',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
         >
           {username}
-        </span>
-        <span
-          style={{
+        </Typography>
+        <Typography
+          sx={{
             fontSize: '11px',
             minWidth: '100px',
           }}
         >
           {moment(createdAt, 'YYYY-MM-DD').format('MMMM D Y')}
-        </span>
-      </span>
+        </Typography>
+      </Typography>
       <div
         style={{
           width: '100%',
