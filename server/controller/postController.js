@@ -49,13 +49,14 @@ postController.getPostsByPostID = async (req, res, next) => {
 };
 
 postController.deletePost = async (req, res, next) => {
-  const { post_id } = req.params;
-  const { author_id } = req.body;
-  Post.findOneAndDelete({ _id: post_id, author_id }).then(() =>
-    res.send('Successfully deleted').catch((err) => {
-      return next(err);
-    }),
-  );
+  try {
+    const { post_id } = req.params;
+    const { author_id } = req.body;
+    await Post.findOneAndDelete({ _id: post_id, author_id });
+    res.sendStatus(200);
+  } catch (err) {
+    return next(err);
+  }
 };
 
 module.exports = postController;
