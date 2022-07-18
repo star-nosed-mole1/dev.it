@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Box, Avatar, Paper, Typography } from "@mui/material";
 import moment from "moment";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { refreshPost } from "../redux/reducers/PostsSlice";
 
 export function Comment(prop) {
   const comment = prop.commentInfo;
@@ -9,8 +10,7 @@ export function Comment(prop) {
   const currentUser = useSelector((state) => state.user);
   const [userComment, setUserComment] = useState(false);
   const currentUserId = currentUser.id; // to check if the comment belongs to that specific user
-
-  // console.log(comment);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (comment.author_id === currentUserId) {
@@ -26,7 +26,9 @@ export function Comment(prop) {
         author_id: currentUserId,
       }),
     });
+    prop.resetComments([]);
     prop.refreshComments();
+    dispatch(refreshPost());
   }
 
   return (
