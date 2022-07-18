@@ -89,8 +89,7 @@ export function PostSpecific(prop) {
     const response = await fetch(`http://localhost:3000/post/${postId}`, {
       method: "DELETE",
       body: JSON.stringify({
-        author_id: currentUseId,
-        post_id: postId,
+        author_id: currentUserId,
       }),
     });
   }
