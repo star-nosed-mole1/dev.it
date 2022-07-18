@@ -14,6 +14,38 @@ const userSchema = new mongoose.Schema(
     githubID: String,
     googleID: String,
     avatar: String,
+    devutation: {
+      type: Number,
+      default: 0,
+    },
+    upvoted_posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+        unique: true,
+      },
+    ],
+    downvoted_posts: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post',
+        unique: true,
+      },
+    ],
+    upvoted_comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+        unique: true,
+      },
+    ],
+    downvoted_comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment',
+        unique: true,
+      },
+    ],
     joined_on: {
       type: Date,
       default: Date.now,
