@@ -10,7 +10,7 @@ export function Comment(prop) {
   const [userComment, setUserComment] = useState(false);
   const currentUserId = currentUser.id; // to check if the comment belongs to that specific user
 
-  console.log(comment);
+  // console.log(comment);
 
   useEffect(() => {
     if (comment.author_id === currentUserId) {
@@ -18,7 +18,16 @@ export function Comment(prop) {
     }
   }, []);
 
-  async function deleteComment() {}
+  async function deleteComment() {
+    const commentId = comment._id;
+    const result = await fetch(`http://localhost:3000/comment/${commentId}`, {
+      method: "DELETE",
+      body: JSON.stringify({
+        author_id: currentUserId,
+      }),
+    });
+    prop.refreshComments();
+  }
 
   return (
     <Box
@@ -99,6 +108,7 @@ export function Comment(prop) {
                   },
                   transitionDuration: "0.3s",
                 }}
+                onClick={deleteComment}
               >
                 remove comment
               </Typography>

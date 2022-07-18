@@ -19,21 +19,13 @@ commentController.newComment = async (req, res, next) => {
     .catch((err) => next(err));
 };
 
-commentController.getComments = async (req, res, next) => {
-  try {
-    const { post_id } = req.params;
-    const comments = await Comment.find({ post_id });
-    res.send(comments);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 commentController.deleteComment = async (req, res, next) => {
+  console.log("test");
   try {
     const { comment_id } = req.params;
-    const { author_id } = req.body;
-    await Comment.findOneAndDelete({ _id: comment_id, author_id });
+
+    await Comment.findOneAndDelete({ _id: comment_id });
+
     res.sendStatus(200);
   } catch (err) {
     return next(err);
