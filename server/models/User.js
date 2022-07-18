@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    github: String,
+    githubID: String,
+    googleID: String,
     avatar: String,
     devutation: {
       type: Number,

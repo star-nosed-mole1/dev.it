@@ -1,10 +1,10 @@
-const User = require('../models/User');
+const User = require("../models/User");
 
 const userController = {};
 
 userController.registerUser = async (req, res, next) => {
   try {
-    const { username, password, avatar } = req.body;
+    const { username, password, avatar } = JSON.parse(req.body);
     const user = await User.create({ username, password, avatar });
     res.send(user);
   } catch (err) {
@@ -20,7 +20,7 @@ userController.getUsers = async (req, res, next) => {
 
 // Gets an arr of user_ids **FOR DEV PURPOSES**
 userController.getUserIds = async (req, res, next) => {
-  const ids = await User.find({}).select('_id');
+  const ids = await User.find({}).select("_id");
   res.send(ids);
 };
 
@@ -29,7 +29,7 @@ userController.getOneUser = async (req, res, next) => {
   const { id } = req.params;
 
   User.findById(id)
-    .populate('subscribed_to')
+    .populate("subscribed_to")
     .exec((err, user) => {
       if (err) return next(err);
       res.send(user);

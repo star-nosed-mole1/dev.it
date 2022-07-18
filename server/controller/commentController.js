@@ -2,6 +2,7 @@ const Comment = require('../models/Comment');
 const Post = require('../models/Post');
 const User = require('../models/User');
 
+
 const commentController = {};
 
 commentController.newComment = async (req, res, next) => {
@@ -14,7 +15,7 @@ commentController.newComment = async (req, res, next) => {
         comments: comment,
       },
     },
-    { safe: true, upsert: true },
+    { safe: true, upsert: true }
   )
     .then((data) => res.send(data))
     .catch((err) => next(err));
@@ -34,7 +35,6 @@ commentController.deleteComment = async (req, res, next) => {
   try {
     const { comment_id } = req.params;
     const { author_id } = req.body;
-
     const post = await Post.findOne({ author_id });
     const user = await User.findById(author_id);
 
@@ -43,7 +43,6 @@ commentController.deleteComment = async (req, res, next) => {
 
     post.save();
     user.save();
-
     res.sendStatus(200);
   } catch (err) {
     return next(err);

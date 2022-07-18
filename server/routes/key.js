@@ -5,5 +5,9 @@ module.exports ={
     },
     session:{
         cookieKey:'bheif9qwjwpeof09wuefw'
+    },
+    google :{
+        clientID: '986279936102-6gpch148rb2husmfi9ktmb6vu9473b5r.apps.googleusercontent.com',
+        clientSecret: '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'
     }
 }
