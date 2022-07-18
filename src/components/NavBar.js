@@ -2,8 +2,9 @@ import React from "react";
 import { AppBar, IconButton, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/system";
-import logo from "../assets/devit.png";
+import logo from "../assets/devit_logo.svg";
 import GitHubIcon from "@mui/icons-material/GitHub";
+import { motion } from "framer-motion";
 
 export function NavBar() {
   return (
@@ -17,14 +18,14 @@ export function NavBar() {
         justifyContent: "space-between",
       }}
     >
-      <IconButton
+      <Box
         sx={{
           padding: "0px",
           paddingLeft: "10px",
         }}
       >
         <img src={logo} width="100%" height="100%" />
-      </IconButton>
+      </Box>
 
       <Box
         sx={{

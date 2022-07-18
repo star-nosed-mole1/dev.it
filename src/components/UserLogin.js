@@ -10,10 +10,11 @@ import {
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import SendRoundedIcon from "@mui/icons-material/SendRounded";
-import { IconButton, Divider, CircularProgress } from "@mui/material";
+import { Divider } from "@mui/material";
 import { updateUser } from "../redux/reducers/UserSlice";
 import { useDispatch } from "react-redux";
+import { refreshPost } from "../redux/reducers/PostsSlice";
+import { motion } from "framer-motion";
 
 export function UserProfile() {
   const [loginAccount, setLoginAccount] = useState(true);
@@ -64,6 +65,7 @@ export function UserProfile() {
         content: content,
       }),
     });
+    dispatch(refreshPost());
   }
 
   async function signUp() {
@@ -85,7 +87,8 @@ export function UserProfile() {
     }
     setTimeout(() => {
       setStatusRegistration("");
-    }, 2000);
+      setLoginAccount(true);
+    }, 1000);
   }
 
   if (loggedIn) {
@@ -174,27 +177,22 @@ export function UserProfile() {
               multiline
               onChange={(e) => setContent(e.target.value)}
             ></TextField>
-            <IconButton
-              sx={{
-                margin: "0px",
-                padding: "0px",
-                paddingRight: "10px",
-                paddingBottom: "10px",
-                position: "absolute",
-              }}
-              disableRipple
-              color="primary"
-              onClick={submitPost}
-            >
-              <SendRoundedIcon
-                sx={{
-                  "&:hover": {
-                    color: "#ff9800",
-                  },
-                }}
-              ></SendRoundedIcon>
-            </IconButton>
           </Box>
+          <motion.div
+            animate={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            whileHover={{
+              scale: 0.98,
+            }}
+          >
+            <Button variant="contained" onClick={submitPost}>
+              SUBMIT POST
+            </Button>
+          </motion.div>
         </Box>
         <Divider />
         <Box
@@ -208,13 +206,13 @@ export function UserProfile() {
         >
           <Button
             small
+            variant="standard"
             sx={{
+              scale: 0.6,
               fontFamily: "Quicksand",
               fontWeight: 600,
-              width: "60%",
               color: "#fefefe",
               borderRadius: "30px",
-              backgroundColor: "#c62828",
               "&:hover": {
                 backgroundColor: "#e53935",
               },
