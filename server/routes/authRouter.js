@@ -29,10 +29,13 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       const foundUser = await User.find({ githubID: profile.id });
-      if (foundUser) {
+      if (foundUser.length) {
+        console.log(foundUser, 'found user');
         done(null, foundUser);
       } else {
-        const newUser = await User.create({ githubID: profile.id });
+        const newUser = await User.create({ username: profile.username, password:"password", avatar:profile.photos[0].value, githubID: profile.id });
+        console.log(newUser, 'new user');
+
         done(null, newUser);
       }
     }
@@ -45,11 +48,11 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:3000/auth/google/callback"
 },
 async (accessToken, refreshToken, profile, done) => {
-  const foundUser = await User.find({ githubID: profile.id });
+  const foundUser = await User.find({ googleID: profile.id });
   if (foundUser) {
     done(null, foundUser);
   } else {
-    const newUser = await User.create({ githubID: profile.id });
+    const newUser = await User.create({  username: profile.username, password: "password", avatar:profile.photos[0].value, googleID: profile.id });
     done(null, newUser);
   }
 }));
@@ -59,17 +62,21 @@ router.get("/login", authController.login);
 router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
 
 router.get("/github/callback", passport.authenticate("github"), authController.login, (req, res) => {
-  if (process.env.npm_lifecycle_event === 'dev') res.redirect('http://localhost:8080/')
-  res.redirect("/");
+  // if (process.env.npm_lifecycle_event === 'dev') res.json(res.user);
+  res.json(req.user);
 });
 
 router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
 
 router.get("/google/callback", passport.authenticate("google"), authController.login, (req, res) => {
-  if (process.env.npm_lifecycle_event === 'dev') res.redirect('http://localhost:8080/')
-  res.redirect("/");
+  // if (process.env.npm_lifecycle_event === 'dev') res.redirect('http://localhost:8080/')
+  res.json(req.user);
 });
 
-router.get("/logout");
-
+router.get("/logout", function(req, res){
+  req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+  });
+});
 module.exports = router;
