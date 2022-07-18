@@ -82,7 +82,7 @@ export default function PostDisplay() {
         <Box
           sx={{
             width: '70vw',
-            height: 700,
+            height: 750,
             backgroundColor: 'secondary.light',
             display: 'flex',
             flexDirection: 'column',
