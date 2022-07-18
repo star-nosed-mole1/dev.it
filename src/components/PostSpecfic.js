@@ -62,6 +62,14 @@ export function PostSpecific(prop) {
     setUpvotes(result.data.upvotes);
   }
 
+  async function handleVote(e, vote) {
+    if (vote === 'upvote') {
+      upvote();
+    } else {
+      downvote();
+    }
+  }
+
   async function downvote() {
     const { author_id, _id } = postObject;
     const authorId = author_id._id;
@@ -206,7 +214,7 @@ export function PostSpecific(prop) {
               sx={{
                 fontFamily: 'Quicksand',
                 fontWeight: 600,
-                minWidth: '91%',
+                minWidth: '80%',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -222,19 +230,15 @@ export function PostSpecific(prop) {
                 width: '100%',
               }}
             >
-              <ToggleButtonGroup exclusive='true' color='secondary'>
-                <ToggleButton
-                  onClick={() => upvote()}
-                  value='upvote'
-                  aria-label='upvote'
-                >
+              <ToggleButtonGroup
+                exclusive='true'
+                color='primary'
+                onChange={handleVote}
+              >
+                <ToggleButton value='upvote' aria-label='upvote'>
                   <ThumbUpIcon />
                 </ToggleButton>
-                <ToggleButton
-                  onClick={() => downvote()}
-                  value='downvote'
-                  aria-label='downvote'
-                >
+                <ToggleButton value='downvote' aria-label='downvote'>
                   <ThumbDownIcon />
                 </ToggleButton>
               </ToggleButtonGroup>

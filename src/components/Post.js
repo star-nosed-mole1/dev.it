@@ -154,20 +154,14 @@ export default function Post(prop) {
           className='content'
           style={{
             width: '100%',
-            fontSize: '18px',
+            fontSize: '2vh',
             textAlign: 'center',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
         >
-          <span
-            style={{
-              maxWidth: '600px',
-            }}
-          >
-            {content}
-          </span>
+          {content}
         </span>
         <animated.span style={commentStyle}>
           <Badge
