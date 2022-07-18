@@ -10,15 +10,15 @@ export function Comment(prop) {
   const [userComment, setUserComment] = useState(false);
   const currentUserId = currentUser.id; // to check if the comment belongs to that specific user
 
+  console.log(comment);
+
   useEffect(() => {
     if (comment.author_id === currentUserId) {
       setUserComment(true);
     }
   }, []);
 
-  async function deleteComment() {
-    
-  }
+  async function deleteComment() {}
 
   return (
     <Box
