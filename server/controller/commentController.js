@@ -1,7 +1,6 @@
-const Comment = require('../models/Comment');
-const Post = require('../models/Post');
-const User = require('../models/User');
-
+const Comment = require("../models/Comment");
+const Post = require("../models/Post");
+const User = require("../models/User");
 
 const commentController = {};
 
@@ -21,28 +20,11 @@ commentController.newComment = async (req, res, next) => {
     .catch((err) => next(err));
 };
 
-commentController.getComments = async (req, res, next) => {
-  try {
-    const { post_id } = req.params;
-    const comments = await Comment.find({ post_id });
-    res.send(comments);
-  } catch (err) {
-    return next(err);
-  }
-};
-
 commentController.deleteComment = async (req, res, next) => {
   try {
     const { comment_id } = req.params;
-    const { author_id } = req.body;
-    const post = await Post.findOne({ author_id });
-    const user = await User.findById(author_id);
 
-    post.comments.pull({ _id: comment_id });
-    user.comments.pull({ _id: comment_id });
-
-    post.save();
-    user.save();
+    await Comment.findOneAndDelete({ _id: comment_id });
     res.sendStatus(200);
   } catch (err) {
     return next(err);

@@ -49,17 +49,17 @@ export function UserProfile() {
     }
   }
 
-  useEffect(() => {
-    async function getKarma() {
-      const data = await axios.get(
-        `http://localhost:3000/auth/login?username=${username}&password=${password}`
-      );
-      if (data) {
-        setKarma(data.devutation);
-      }
-    }
-    getKarma();
-  }, []);
+  // useEffect(() => {
+  //   async function getKarma() {
+  //     const data = await axios.get(
+  //       `http://localhost:3000/auth/login?username=${username}&password=${password}`
+  //     );
+  //     if (data) {
+  //       setKarma(data.devutation);
+  //     }
+  //   }
+  //   getKarma();
+  // }, []);
 
   function logoutUser() {
     dispatch(

@@ -100,7 +100,11 @@ export function PostSpecific(prop) {
             duration: 0.7,
           }}
         >
-          <Comment commentInfo={comment} userInfo={user}></Comment>
+          <Comment
+            commentInfo={comment}
+            userInfo={user}
+            refreshComments={getSpecificPost}
+          ></Comment>
         </motion.div>
       );
     }

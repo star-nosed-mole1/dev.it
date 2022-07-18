@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Avatar, Paper, Typography } from "@mui/material";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 export function Comment(prop) {
   const comment = prop.commentInfo;
   const user = prop.userInfo;
+  const currentUser = useSelector((state) => state.user);
+  const [userComment, setUserComment] = useState(false);
+  const currentUserId = currentUser.id; // to check if the comment belongs to that specific user
+
+  // console.log(comment);
+
+  useEffect(() => {
+    if (comment.author_id === currentUserId) {
+      setUserComment(true);
+    }
+  }, []);
+
+  async function deleteComment() {
+    const commentId = comment._id;
+    const result = await fetch(`http://localhost:3000/comment/${commentId}`, {
+      method: "DELETE",
+      body: JSON.stringify({
+        author_id: currentUserId,
+      }),
+    });
+    prop.refreshComments();
+  }
+
   return (
     <Box
       sx={{
@@ -34,7 +58,8 @@ export function Comment(prop) {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-end",
+            justifyContent: "center",
+            alignItems: "center",
           }}
         >
           <Typography
@@ -51,9 +76,9 @@ export function Comment(prop) {
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: "flex-end",
-            alignItems: "flex-start",
+            alignItems: "flex-end",
             height: "100%",
             width: "100%",
           }}
@@ -68,6 +93,27 @@ export function Comment(prop) {
           >
             {comment.content}
           </Typography>
+          {userComment && (
+            <a>
+              <Typography
+                sx={{
+                  fontSize: "0.7em",
+                  padding: "0px",
+                  margin: "0px",
+                  color: "#2196f3",
+                  textDecoration: "underline",
+                  fontStyle: "italic",
+                  "&:hover": {
+                    color: "#64b5f6",
+                  },
+                  transitionDuration: "0.3s",
+                }}
+                onClick={deleteComment}
+              >
+                remove comment
+              </Typography>
+            </a>
+          )}
         </Box>
       </Paper>
       <Avatar
