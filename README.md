@@ -14,7 +14,7 @@ The user will be able to comment and interact with site functionality after they
 
 ## Credits
 This project was done by the tireless effort of the following individuals of Star-Nosed Mole:
-    - Quac - https://github.com/swittuth
+    - Quoc - https://github.com/swittuth
     - Thomas - https://github.com/t1ho
     - Carmen - https://github.com/BadWithNames
     - Jon - https://github.com/Jgarber2675

@@ -4,6 +4,7 @@ const githubStrategy = require("passport-github2");
 const User = require("../models/User");
 const key = require("./key");
 const dotenv = require("dotenv");
+const GoogleStrategy = require('passport-google-oauth20');
 
 dotenv.config();
 
@@ -31,16 +32,25 @@ passport.use(
       if (foundUser) {
         done(null, foundUser);
       } else {
-        const newUser = await User.create({ githubIDL: profile.id });
+        const newUser = await User.create({ githubID: profile.id });
         done(null, newUser);
       }
     }
   )
 );
 
-// passport.use(
-//   new 
-// )
+passport.use(new GoogleStrategy({
+  clientID: key.google.clientID,
+  clientSecret: key.google.clientSecret,
+  callbackURL: "http://localhost:3000/auth/github/callback"
+},
+function(accessToken, refreshToken, profile, cb) {
+  User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    return cb(err, user);
+  });
+}
+));
+
 
 router.get("/login", authController.login);
 router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
@@ -48,7 +58,13 @@ router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
 router.get("/github/callback", passport.authenticate("github"), authController.login, (req, res) => {
   if (process.env.npm_lifecycle_event === 'dev') res.redirect('http://localhost:8080/')
   res.redirect("/");
+});
 
+router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+
+router.get("/google/callback", passport.authenticate("google"), authController.login, (req, res) => {
+  if (process.env.npm_lifecycle_event === 'dev') res.redirect('http://localhost:8080/')
+  res.redirect("/");
 });
 
 router.get("/logout");
