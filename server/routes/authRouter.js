@@ -30,11 +30,9 @@ passport.use(
     async (accessToken, refreshToken, profile, done) => {
       const foundUser = await User.find({ githubID: profile.id });
       if (foundUser.length) {
-        console.log(foundUser, 'found user');
         done(null, foundUser);
       } else {
         const newUser = await User.create({ username: profile.username, password:"password", avatar:profile.photos[0].value, githubID: profile.id });
-        console.log(newUser, 'new user');
 
         done(null, newUser);
       }
@@ -49,10 +47,11 @@ passport.use(new GoogleStrategy({
 },
 async (accessToken, refreshToken, profile, done) => {
   const foundUser = await User.find({ googleID: profile.id });
-  if (foundUser) {
+  if (foundUser.length) {
     done(null, foundUser);
   } else {
-    const newUser = await User.create({  username: profile.username, password: "password", avatar:profile.photos[0].value, googleID: profile.id });
+    console.log(profile, 'profile');
+    const newUser = await User.create({  username: profile.displayName, password: "password", avatar:profile.photos[0].value, googleID: profile.id });
     done(null, newUser);
   }
 }));
