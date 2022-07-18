@@ -39,7 +39,7 @@ export default function Post(prop) {
     display: 'inline-block',
     backfaceVisibility: 'hidden',
     transform: checked
-      ? 'translate(0px, 0px) rotate(0deg) scale(1.35)'
+      ? 'translate(0px, 0px) rotate(0deg) scale(1.3)'
       : 'translate(0px, 0px) rotate(0deg) scale(1)',
     config: {
       tension: 400,
@@ -61,6 +61,12 @@ export default function Post(prop) {
         '&:hover': {
           backgroundColor: 'secondary.light',
           cursor: 'pointer',
+          '& .content': {
+            fontWeight: 'bold',
+          },
+          '& .username': {
+            maxWidth: '100%',
+          },
         },
       }}
       onClick={onClick}
@@ -113,10 +119,11 @@ export default function Post(prop) {
         }}
       >
         <Typography
+          className='username'
           sx={{
             fontSize: '13px',
             whiteSpace: 'nowrap',
-            maxWidth: '80px',
+            maxWidth: '75px',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
@@ -141,6 +148,7 @@ export default function Post(prop) {
         }}
       >
         <span
+          className='content'
           style={{
             width: '100%',
             fontSize: '18px',
@@ -153,15 +161,24 @@ export default function Post(prop) {
           {content}
         </span>
         <animated.span style={commentStyle}>
-          <IconButton
-            size='small'
-            sx={{
-              float: 'right',
-              color: 'primary.main',
+          <Badge
+            badgeContent={comments.length}
+            color='primary'
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'left',
             }}
           >
-            <CommentIcon />
-          </IconButton>
+            <IconButton
+              size='small'
+              sx={{
+                float: 'right',
+                color: 'primary.main',
+              }}
+            >
+              <CommentIcon />
+            </IconButton>
+          </Badge>
         </animated.span>
       </div>
     </Paper>
