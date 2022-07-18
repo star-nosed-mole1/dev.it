@@ -42,14 +42,17 @@ passport.use(
 passport.use(new GoogleStrategy({
   clientID: key.google.clientID,
   clientSecret: key.google.clientSecret,
-  callbackURL: "http://localhost:3000/auth/github/callback"
+  callbackURL: "http://localhost:3000/auth/google/callback"
 },
-function(accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ googleId: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-}
-));
+async (accessToken, refreshToken, profile, done) => {
+  const foundUser = await User.find({ githubID: profile.id });
+  if (foundUser) {
+    done(null, foundUser);
+  } else {
+    const newUser = await User.create({ githubID: profile.id });
+    done(null, newUser);
+  }
+}));
 
 
 router.get("/login", authController.login);
