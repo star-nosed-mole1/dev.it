@@ -16,10 +16,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-  done(null,user)
-  // User.findById(id).then((user) => {
-  //   done(null, user);
-  // });
+  done(null,user);
 });
 
 passport.use(
@@ -41,11 +38,17 @@ passport.use(
   )
 );
 
+// passport.use(
+//   new 
+// )
+
 router.get("/login", authController.login);
 router.get("/github", passport.authenticate("github", { scope: ["profile"] }));
 
 router.get("/github/callback", passport.authenticate("github"), authController.login, (req, res) => {
-  res.send("LOGIN FREELY");
+  if (process.env.npm_lifecycle_event === 'dev') res.redirect('http://localhost:8080/')
+  res.redirect("/");
+
 });
 
 router.get("/logout");
