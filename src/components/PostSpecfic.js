@@ -22,6 +22,7 @@ import axios from 'axios';
 
 export function PostSpecific(prop) {
   const postObject = prop.postDetail;
+  const { darkMode } = prop;
   const [comments, setComments] = useState([]);
   const [submitComment, setSubmitComment] = useState('');
   const [loadingComments, setLoadingComments] = useState(false);
@@ -80,12 +81,12 @@ export function PostSpecific(prop) {
   async function getSpecificPost() {
     setLoadingComments(true);
     const post = await fetch(
-      `http://localhost:3000/post/${postObject._id}`
+      `http://localhost:3000/post/${postObject._id}`,
     ).then((response) => response.json());
     const postComments = post.comments;
     for (let comment of postComments) {
       const user = await fetch(
-        `http://localhost:3000/user/${comment.author_id}`
+        `http://localhost:3000/user/${comment.author_id}`,
       ).then((response) => response.json());
       commentArray.push(
         <motion.div
@@ -105,7 +106,7 @@ export function PostSpecific(prop) {
             userInfo={user}
             refreshComments={getSpecificPost}
           ></Comment>
-        </motion.div>
+        </motion.div>,
       );
     }
     if (postComments.length !== comments.length) {

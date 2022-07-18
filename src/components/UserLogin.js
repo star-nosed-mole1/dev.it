@@ -16,7 +16,7 @@ import { useDispatch } from 'react-redux';
 import { refreshPost } from '../redux/reducers/PostsSlice';
 import { motion } from 'framer-motion';
 
-export function UserProfile() {
+export function UserProfile({ darkMode }) {
   const [loginAccount, setLoginAccount] = useState(true);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +36,7 @@ export function UserProfile() {
 
   async function login() {
     const data = await fetch(
-      `http://localhost:3000/auth/login?username=${username}&password=${password}`
+      `http://localhost:3000/auth/login?username=${username}&password=${password}`,
     ).then((response) => response.json());
     if (data) {
       // send dispatch
@@ -67,7 +67,7 @@ export function UserProfile() {
         _id: '',
         username: '',
         avatar: '',
-      })
+      }),
     );
   }
 
@@ -118,7 +118,7 @@ export function UserProfile() {
           flexDirection: 'column',
           justifyContent: 'flex-start',
           padding: '20px',
-          backgroundColor: 'secondary.light',
+          backgroundColor: darkMode ? 'black' : 'secondary.light',
           gap: '10px',
         }}
       >
@@ -265,7 +265,7 @@ export function UserProfile() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '10px',
-          backgroundColor: 'primary.light',
+          backgroundColor: darkMode ? 'black' : 'secondary.light',
           gap: '10px',
         }}
       >
@@ -314,6 +314,7 @@ export function UserProfile() {
               fontWeight: 500,
               fontSize: '0.7em',
               textAlign: 'center',
+              color: darkMode ? 'white' : 'black',
               '&:hover': {
                 color: 'primary.dark',
                 transitionDuration: '0.5s',
@@ -388,17 +389,20 @@ export function UserProfile() {
             REGISTER
           </Typography>
         </Button>
-        <Button
-          variant='contained'
-          sx={{
-            backgroundColor: '#1565c0',
-            '&:hover': {
-              backgroundColor: '#42a5f5',
-            },
-          }}
-        >
-          <GoogleIcon></GoogleIcon>
-        </Button>
+        <a href='http://localhost:3000/auth/google'>
+          <Button
+            variant='contained'
+            sx={{
+              backgroundColor: '#1565c0',
+              width: '100%',
+              '&:hover': {
+                backgroundColor: '#42a5f5',
+              },
+            }}
+          >
+            <GoogleIcon></GoogleIcon>
+          </Button>
+        </a>
         <a href='http://localhost:3000/auth/github'>
           <Button
             variant='contained'

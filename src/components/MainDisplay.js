@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/system';
 import { Grid } from '@mui/material';
 import PostDisplay from './PostDisplay';
@@ -6,6 +6,15 @@ import { NavBar } from './NavBar';
 import { UserProfile } from './UserLogin';
 
 export function MainDisplay() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem('darkMode')) {
+      const ls = localStorage.getItem('darkMode');
+      setDarkMode(ls);
+    }
+  }, []);
+
   return (
     <Box
       sx={{
@@ -14,9 +23,10 @@ export function MainDisplay() {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-around',
+        backgroundColor: darkMode ? '#63666A' : 'white',
       }}
     >
-      <NavBar />
+      <NavBar darkMode={darkMode} setDarkMode={setDarkMode} />
       {/* add navigation bar */}
       {/* for bottom container in the post display */}
       <Box
@@ -32,10 +42,10 @@ export function MainDisplay() {
         }}
       >
         <Box>
-          <PostDisplay />
+          <PostDisplay darkMode={darkMode} />
         </Box>
         <Box>
-          <UserProfile />
+          <UserProfile darkMode={darkMode} />
         </Box>
       </Box>
     </Box>
