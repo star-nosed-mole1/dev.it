@@ -1,5 +1,7 @@
 # DEV.it
 
+![Frontend UI of Vault](https://github.com/star-nosed-mole1/dev.it/blob/development/Devit_frontend_display.gif)
+
 Dev.it is a forum site with CRUD functionality. Users can create comments and posts, and view comments and posts left by other users. Users can also validate their profile using 3rd party authentication through github.
 
 This site uses MERN in our tech stack, including passport for 3rd part authentication, faker to populate our database, react and redux for state management, axios and moment to drive middleware logic, and framer-post, materialUI, and react-spring for front-end visual styling.
